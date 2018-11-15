@@ -12,21 +12,16 @@
 const express = require('express');
 const app = express();
 const express_router = express.Router();
-
-const register_middleware = require('../middleware/register_middleware');
-const login_middleware = require('../middleware/login_middleware');
-
-const register_controller = require('../controller/register_controller');
-const login_controller = require('../controller/login_controller');
-
+const middleware = require('../middleware/user_middleware');
+const user_controller = require('../controller/user_controller');
 /**
  * post method of express to send controls to controller from routes through middleware
  * post for registration
  */
-express_router.post('/register',register_middleware.register_middleware, register_controller.register_controller);
+express_router.post('/register', middleware.register_middleware, user_controller.register_controller);
 /**
  * post for login
  */
-express_router.post('/login', login_middleware.login_middleware, login_controller.login_controller);
+express_router.post('/login', middleware.login_middleware, user_controller.login_controller);
 
 module.exports= express_router;
