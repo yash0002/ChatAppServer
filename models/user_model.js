@@ -8,16 +8,16 @@ var mongoose = require('mongoose');
 /**
  * @description Everything in mongoose start with schema
  */
-var Schema = mongoose.Schema;
+var userSchema =new mongoose.Schema({
+  email_id: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+});;
 
 /**
  * Every schema maps to MongoDB collection & define schemas shape within collection
  * creating new schema
  */
-var userSchema = new Schema({
-  email_id: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+// var userSchema = new Schema
 
 /**
  * the schema is useless so far
@@ -26,8 +26,6 @@ var userSchema = new Schema({
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
 var user = mongoose.model('users', userSchema);
-
-
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  */
@@ -37,36 +35,39 @@ var user = mongoose.model('users', userSchema);
   * make this available to our users in our Node applications
   */
 exports.loginDb = function(req, res) {
-    db.find({email_id : req.data.email},function(err, user) {
-        if(err) throw err;
-
-        console.log(db);
-        callback(null, db);
-        
+    user.findOne({email_id : req.data.email, password : req.body.passw},function(err, user) {
+        if(err) callback(err);
+        console.log(user);
+        callback(null, user);
     })
 }
+
 /**
  * @description saving data inside database
  */
-exports.registerDb = function(req, res) {
+exports.registerDb = function(req,callback) {
     // console.log('in model before goining in');
     // console.log("request : ------------------");
     // console.log(req.body.email);
     // console.log(req.body.passw);
-    
-    let newUser = new user(req.body);
-    newUser.save(function (err, newUser) {
-      if(err) return console.log(err);
+    let newUser = new user({
+          email_id:req.body.email,
+          password:req.body.passw
+    });
+    newUser.save(function (err, result) {
+      if(err) 
+      console.log(err);
       else {
         console.log('Registration Successfully Done');
-        callback(null, newUser);
+        console.log("result=",result);
+        
+        return callback(null, result);
       }
-      
     })
-    .then(item => {
-      res.send("item saved to database");
-    })
-    .catch(err => {
-      res.status(400).send("unable to save to database");
-    });
+    // .then(item => {
+    //   res.send("item saved to database");
+    // })
+    // .catch(err => {
+    //   res.status(400).send("unable to save to database");
+    // });
 }

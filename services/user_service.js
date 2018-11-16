@@ -23,7 +23,9 @@ exports.register_service_function = function(req, res) {
         }
         else
         {
-            callback(null, data);
+            console.log('retuned from model');            
+           return callback(null, data);
         }
+        console.log('return complete from model');
     })
 }
