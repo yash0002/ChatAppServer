@@ -36,8 +36,12 @@ var user = mongoose.model('users', userSchema);
   */
 exports.loginDb = function(req, callback) {
 
-  user.findOne({email_id : req.data.email, password : req.body.passw},function(err, result) {
-    if(err) return callback(err);
+  user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
+    if(err) {
+
+      console.log(err);      
+      return callback(err);
+    } 
     else {
       console.log('Login Successful');
       return callback(null, result);            

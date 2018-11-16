@@ -9,8 +9,8 @@ const models = require('../app/models/user_model');
  * @description login service
  */
 exports.login_service_function = function(req, callback) {
-    
-    models.loginDb(req.body, (err, data) => {
+
+    models.loginDb(req, (err, data) => {
 
         if(err) return callback(err);
         else callback(null, data);
