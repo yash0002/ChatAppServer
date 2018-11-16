@@ -13,7 +13,11 @@ exports.login_service_function = function(req, res) {
     });
 }
 exports.register_service_function = function(req, res) {
-    models.registerDb(req.body, (err, data) => {
+    console.log('in service before goining in');
+    console.log('req body pass ----------- ', req.body.passw);
+    console.log('req body  -----------', req.body.email);
+    
+    models.registerDb(req, (err, data) => {
         if(err) {
             res.send(err)
         }
