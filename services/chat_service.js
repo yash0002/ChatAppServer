@@ -8,11 +8,15 @@ const models = require('../app/models/chat_model');
 /**
  * @description login service
  */
-exports.chat_service_function = function(req, callback) {
+exports.chat_service_function = function (req, callback) {
 
     models.chatsDb(req, (err, data) => {
 
-        if(err) return callback(err);
-        else callback(null, data);
+        if (err) {
+            return callback(err);
+        }
+        else {
+            callback(null, data);
+        }
     });
 }

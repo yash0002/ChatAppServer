@@ -16,7 +16,7 @@ var Schema = mongoose.Schema;
  */
 var userSchema = new Schema({
     message: { type: String, required: true },
-    email_id: { type: String, required: true, unique: true }
+    email_id: { type: String, required: true }
 })
 
 /**
@@ -35,7 +35,7 @@ var chats = mongoose.model('chats', userSchema);
  */
 exports.chatsDb = function(req, callback) {
 
-  let newUser = new user({
+  let newUser = new chats({
     message : req.message,
     email_id : req.email_id,
   });

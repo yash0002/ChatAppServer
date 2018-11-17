@@ -68,13 +68,14 @@ socket_io.on('connection', function(socket) {
       email_id : user_email_id,
       message : user_sent_message
     }
-    console.log('request_object ------------');    
+    console.log('request_object ------------server side');    
     console.log(request_object);    
     //create a message object
     // let  message = {"message":messageContent, "sender":sender}  
     // send the message to the client side  
     // socket_io.emit('response_message', message)
-    function server_socket_launch(request_object, res) {
+    server_socket_launch(request_object);
+    function server_socket_launch(request_object) {
     
       console.log('inside server calling controllerr');
       

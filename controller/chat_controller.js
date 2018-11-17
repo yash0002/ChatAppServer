@@ -9,12 +9,16 @@
  */
 const service = require('../services/chat_service');
 
-exports.chat_controller = function(req, res) {
+exports.chat_controller = function(req, callback ) {
     console.log('controller chatting');
     
     service.chat_service_function(req, (err,data) => {
        
-        if(err) res.status(400).send(err)
-        else res.status(200).send(data);
+        if(err) {
+            callback(err)
+        }
+        else {
+            callback(null, data)
+        }
     })
 }
