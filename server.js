@@ -9,13 +9,14 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true}));
 app.use('/', routes);
-app.listen(3001,()=>{
+server = app.listen(3001,()=>{
   console.log('server is up and running');
 });
-
+const socket_io = require('socket.io')(server);
+socket_io.on('connection', function(socket) {
+  console.log('Client Connected');
+});
 let db_url = db_connect.url;
-console.log(db_url);
-
 startMongo(db_url);
 
 function startMongo(db_url)
@@ -25,9 +26,13 @@ function startMongo(db_url)
   mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb');  });
 }
 
-// router.get('/', function(req,res) {
-//   res.json({message: 'welcome to our upload module apis'});
-// });
+app.get('/', function(req,res) {
+  res.json({message: 'welcome to ChatApp'});
+});
+
+// http.listen(3001, function() {
+//   console.log('socket listening on 3001');
+// })
 
 // app.use( session ({
 //   secret : 'fraggle-rock', //random string
