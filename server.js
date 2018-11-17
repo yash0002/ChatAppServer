@@ -14,8 +14,12 @@ server = app.listen(3001,()=>{
 });
 const socket_io = require('socket.io')(server);
 socket_io.on('connection', function(socket) {
-  console.log('Client Connected');
+  console.log('Client Connected on Server Side');
 });
+socket_io.on('disconnect', function () {
+  console.log('Client Disconnected on Server Side');
+  
+})
 let db_url = db_connect.url;
 startMongo(db_url);
 
@@ -29,7 +33,7 @@ function startMongo(db_url)
 app.get('/', function(req,res) {
   res.json({message: 'welcome to ChatApp'});
 });
-
+//we donot use http because we are using our own server
 // http.listen(3001, function() {
 //   console.log('socket listening on 3001');
 // })
