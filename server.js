@@ -11,6 +11,8 @@ const mongoose = require('mongoose');
 const db_connect = require('./config/database_config');
 const routes = require('./routes/routes');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+app.use(cors());
 /**
  * @description setting port for server
  */
@@ -40,6 +42,7 @@ function startMongo(db_url)
   mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb');  });
   mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb');  });
 }
+
 /**
  * making socket connecion ready & ready to listen on port
  */
@@ -49,11 +52,6 @@ const socket_io = require('socket.io')(server);
  */
 socket_io.on('connection', function(socket) {
   console.log('Client Connected on Server Side');
-});
-
-socket_io.on('chat_message', function(message_sent, user_login) {
-  console.log('server page chat app receiving');
-  console.log(user_login+" logged in  : message sent is : " +messageContent)
   /**
    * @description 'socket.on' will be used only when we have to show how many are login to all users except the person login and seeing
    * socket.on('join', function(email_id) {}
@@ -61,12 +59,32 @@ socket_io.on('chat_message', function(message_sent, user_login) {
    * 'socket_io' will be used only when we have to show all users including the one currently login & seeing
    * socket_io('join', function(email_id)) {}
    */
-  //create a message object
-  // let  message = {"message":messageContent, "sender":sender}  
-  // send the message to the client side  
-  // socket_io.emit('response_message', message)
+  const controller_of_chat = require('./controller/chat_controller');
+  socket.on('chat_message', function(user_email_id, user_sent_message) {
+    
+    console.log('server page chat app receiving');   
+    console.log(user_email_id+" logged in  : message sent is : " +user_sent_message);
+    let request_object = { 
+      email_id : user_email_id,
+      message : user_sent_message
+    }
+    console.log('request_object ------------');    
+    console.log(request_object);    
+    //create a message object
+    // let  message = {"message":messageContent, "sender":sender}  
+    // send the message to the client side  
+    // socket_io.emit('response_message', message)
+    function server_socket_launch(request_object, res) {
+    
+      console.log('inside server calling controllerr');
+      
+      controller_of_chat.chat_controller(request_object, (err, data) => {
+        if(err) socket.emit('response_message', err);
+        else socket.emit('response_message', data);    
+      })
+    }  
+  })
 })
-
 /**
  * cheking socket connection on port is listening or not
  */
@@ -78,9 +96,9 @@ socket_io.on('disconnect', function () {
 /**
  * Displaying get request on server side webpage
  */
-app.get('/', function(req,res) {
-  res.json({message: 'welcome to ChatApp'});
-});
+// app.get('/', function(req,res) {
+//   res.json({message: 'welcome to ChatApp'});
+// });
 //we donot use http because we are using our own server
 // http.listen(3001, function() {
 //   console.log('socket listening on 3001');

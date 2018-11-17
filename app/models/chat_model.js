@@ -15,8 +15,8 @@ var Schema = mongoose.Schema;
  * creating new schema
  */
 var userSchema = new Schema({
-  email_id: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+    message: { type: String, required: true },
+    email_id: { type: String, required: true, unique: true }
 })
 
 /**
@@ -25,40 +25,19 @@ var userSchema = new Schema({
  * instances of these Models are documents
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
-var user = mongoose.model('users', userSchema);
+var chats = mongoose.model('chats', userSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  */
 
- /**
-  * @description Finding data inside database
-  * make this available to our users in our Node applications
-  */
-exports.loginDb = function(req, callback) {
-
-  user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
-    if(err) {
-
-      console.log(err);      
-      return callback(err);
-    } 
-    else {
-      console.log('Login Successful');
-      console.log('result of find-----------');
-      console.log(result);     
-      return callback(null, result);            
-    }
-  })
-}
-
 /**
  * @description saving data inside database
  */
-exports.registerDb = function(req, callback) {
+exports.chatsDb = function(req, callback) {
 
   let newUser = new user({
-    email_id:req.body.email,
-    password:req.body.passw
+    message : req.message,
+    email_id : req.email_id,
   });
   
   newUser.save(function (err, result) {
@@ -68,7 +47,7 @@ exports.registerDb = function(req, callback) {
       return callback(err);
     }
     else {
-      console.log('Registration Successfully Done');
+      console.log('Message Inserted Successfully Done');
       return callback(null, result);
     }
   })
