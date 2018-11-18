@@ -85,6 +85,23 @@ socket_io.on('connection', function(socket) {
       })
     }  
   })
+
+  /**
+   * @description to emit all messages to login_user
+   */
+  socket.on('to_fetch_chats', function() {
+    
+    console.log('server page chat app fetching chats started------');   
+    server_socket_launch();
+    function server_socket_launch() {
+      console.log('inside server calling controllerr');
+      
+      controller_of_chat.chat_fetch_controller((err, data) => {
+        if(err) socket.emit('response_message', err);
+        else socket.emit('response_message', data);    
+      })
+    }
+  })
 })
 /**
  * cheking socket connection on port is listening or not

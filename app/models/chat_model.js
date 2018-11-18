@@ -53,6 +53,25 @@ exports.chatsDb = function(req, callback) {
   })
 }
 
+/**
+ * @description saving data inside database
+ */
+exports.chatsDb_fetch = function(callback) {
+
+  chats.find(function (err, result) {
+    if(err) 
+    {
+      console.log(err);
+      return callback(err);
+    }
+    else {
+      console.log('Message fetched Successfully Done');
+      console.log('result from db -------------------------------------------');
+      console.log(result);      
+      return callback(null, result);
+    }
+  })
+}
 
 //   user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
 //     if(err) {

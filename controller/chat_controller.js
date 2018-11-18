@@ -22,3 +22,20 @@ exports.chat_controller = function(req, callback ) {
         }
     })
 }
+
+/**
+ * @description controller to get traversing controlls & send response to client from server
+ */
+exports.chat_fetch_controller = function(callback) {
+    console.log('controller chatting for fetching');
+    
+    service.chat_fetch_service_function( (err,data) => {
+       
+        if(err) {
+            callback(err)
+        }
+        else {
+            callback(null, data)
+        }
+    })
+}
