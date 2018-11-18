@@ -73,3 +73,24 @@ exports.registerDb = function(req, callback) {
     }
   })
 }
+
+ /**
+  * @description Finding data inside database
+  * make this available to our users in our Node applications
+  */
+ exports.logoutDb = function(req, callback) {
+
+  user.findOne({email_id : req.body.log_user_email_id},function(err, result) {
+    if(err) {
+
+      console.log(err);      
+      return callback(err);
+    } 
+    else {
+      console.log('Logou Successful');
+      console.log('result of find-----------');
+      console.log(result);     
+      return callback(null, result);            
+    }
+  })
+}

@@ -29,5 +29,8 @@ express_router.post('/login', middleware.login_middleware, user_controller.login
 /**
  * get for messages for chatting application
  */
-
+express_router.post('/logout', middleware.logout_middleware, user_controller.logout_controller)
+/**
+ * @exports express_router so the flow can include express router and get the proper routng to required task
+ */
 module.exports= express_router;

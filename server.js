@@ -62,7 +62,7 @@ socket_io.on('connection', function(socket) {
   const controller_of_chat = require('./controller/chat_controller');
   socket.on('chat_message', function(user_email_id, user_sent_message) {
     
-    console.log('server page chat app receiving');   
+    console.log('server page chat app receiving------');   
     console.log(user_email_id+" logged in  : message sent is : " +user_sent_message);
     let request_object = { 
       email_id : user_email_id,

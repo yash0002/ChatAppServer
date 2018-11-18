@@ -29,3 +29,16 @@ exports.register_service_function = function(req, callback) {
 
     })
 }
+
+/**
+ * @description registration service
+ */
+exports.logout_service_function = function(req, callback) {
+
+    models.logoutDb(req, (err, data) => {
+
+        if(err) return callback(err);
+        else return callback(null, data);
+
+    })
+}

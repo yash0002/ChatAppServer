@@ -28,3 +28,12 @@ exports.register_controller = function(req, res) {
         else res.status(200).send(data);        
     })
 }
+
+exports.logout_controller = function(req, res) {
+
+    service.logout_service_function(req, (err,data) => {
+       
+        if(err) res.status(400).send(err)
+        else res.status(200).send(data);
+    })
+}
