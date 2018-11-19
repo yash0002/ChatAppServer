@@ -10,22 +10,70 @@
  * @description function formed as to perform middleware work for login
  */
 exports.login_middleware = function login_middleware(req, res, next) {
-    if(req.body == null) console.log('Something left empty');
-    else next();
+    if(req.body == null) {
+        console.log('Something left empty');
+    }
+    else {
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        {
+            if(req.body.passw.length >= 5)
+            {
+                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(this.state.password))
+                {
+                    next();
+                }
+                else {
+                    console.log('Password Invalid');                    
+                }
+            }
+            else {
+                console.log('Password Incorrect');                
+            }
+        }
+        else {
+            console.log('Email_id not correct');            
+        }
+    }
 }
 
 /**
  * @description function formed as to perform middleware work for registration
  */
 exports.register_middleware = function (req, res, next) {
-    if(req.body == null) console.log('Something left empty');
-    else next();
+    if(req.body == null) {
+        console.log('Something left empty');
+    }
+    else {
+        if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
+        {
+            if(req.body.passw.length >= 5)
+            {
+                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(this.state.password))
+                {
+                    next();
+                }
+                else {
+                    console.log('Password Invalid');                    
+                }
+            }
+            else {
+                console.log('Password Incorrect');                
+            }
+        }
+        else {
+            console.log('Email_id not correct');            
+        }
+    }
 }
 
 /**
  * @description function formed as to perform middleware work for registration
  */
 exports.logout_middleware = function (req, res, next) {
-    if(req.body == null) console.log('Something left empty');
-    else next();
-}
+    if(req.body == null) {
+        console.log('Something left empty');
+    }
+    else {
+        next();
+    }
+} 
