@@ -100,7 +100,7 @@ socket_io.on('connection', function(socket) {
         }
         else {
           console.log('data as result_message set : -------  in server.js ------------------');
-          console.log(data);          
+          console.log(typeof data);          
           socket.emit('response_message', data);    
         }
       })

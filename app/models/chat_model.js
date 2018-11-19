@@ -17,7 +17,10 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     message: { type: String, required: true },
     email_id: { type: String, required: true }
+// name: { type: String, required: true },
+// user: {type:Object, reference: 'users'}
 })
+
 
 /**
  * the schema is useless so far
@@ -67,7 +70,7 @@ exports.chatsDb_fetch = function(callback) {
     else {
       console.log('Message fetched Successfully Done');
       console.log('result from db in model-------------------------------------------');
-      console.log(result);
+      // console.log(result);
       let j = 0, all_chat_messages = [], all_chat_send_by_user = [];
       result.forEach(function(x) {
         all_chat_messages.push(x.message);
@@ -85,7 +88,7 @@ exports.chatsDb_fetch = function(callback) {
         message : all_chat_messages,
         email_id : all_chat_send_by_user
       }
-      
+      console.log("result_final_message_set,", result_final_message_set)
       // for()
       return callback(null, result_final_message_set);
     }

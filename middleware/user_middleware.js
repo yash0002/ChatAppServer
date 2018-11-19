@@ -18,7 +18,7 @@ exports.login_middleware = function login_middleware(req, res, next) {
         {
             if(req.body.passw.length >= 5)
             {
-                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(this.state.password))
+                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.passw))
                 {
                     next();
                 }
@@ -48,7 +48,7 @@ exports.register_middleware = function (req, res, next) {
         {
             if(req.body.passw.length >= 5)
             {
-                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(this.state.password))
+                if(/^[a-zA-Z0-9][\w!]{5,9}$/g.test(req.body.passw))
                 {
                     next();
                 }
