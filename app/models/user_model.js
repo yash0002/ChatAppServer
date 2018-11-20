@@ -38,14 +38,11 @@ exports.loginDb = function(req, callback) {
 
   user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
     if(err) {
-
       console.log(err);      
       return callback(err);
     } 
     else {
       console.log('Login Successful');
-      console.log('result of find-----------');
-      console.log(result);     
       return callback(null, result);            
     }
   })
@@ -88,8 +85,6 @@ exports.registerDb = function(req, callback) {
     } 
     else {
       console.log('Logou Successful');
-      console.log('result of find-----------');
-      console.log(result);     
       return callback(null, result);            
     }
   })

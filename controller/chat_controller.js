@@ -10,10 +10,7 @@
 const service = require('../services/chat_service');
 
 exports.chat_controller = function(req, callback ) {
-    console.log('controller chatting');
-    
     service.chat_service_function(req, (err,data) => {
-       
         if(err) {
             callback(err)
         }
@@ -27,10 +24,7 @@ exports.chat_controller = function(req, callback ) {
  * @description controller to get traversing controlls & send response to client from server
  */
 exports.chat_fetch_controller = function(callback) {
-    console.log('controller chatting for fetching');
-    
     service.chat_fetch_service_function( (err,data) => {
-       
         if(err) {
             callback(err)
         }

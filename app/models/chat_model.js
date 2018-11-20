@@ -1,6 +1,9 @@
-
 /**
  * @description linking database with code
+ * @author Yash
+ * @version 11.1
+ * @since 12/11/2018
+ * @module Server
  */
 
 // grab the things we need
@@ -31,12 +34,13 @@ var userSchema = new Schema({
 var chats = mongoose.model('chats', userSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
+ * --------------------------------------------------------------------------------------------------------------------------
  */
-
 /**
  * @description saving data inside database
  */
 exports.chatsDb = function(req, callback) {
+console.log('inside model server');
 
   let newUser = new chats({
     message : req.message,
@@ -68,29 +72,14 @@ exports.chatsDb_fetch = function(callback) {
       return callback(err);
     }
     else {
-      console.log('Message fetched Successfully Done');
-      console.log('result from db in model-------------------------------------------');
-      // console.log(result);
-      let j = 0, all_chat_messages = [], all_chat_send_by_user = [];
+      let chats_format = [];
       result.forEach(function(x) {
-        all_chat_messages.push(x.message);
-        all_chat_send_by_user.push(x.email_id);
-        j++;
+        chats_format.push({
+          message : x.message,
+          email_id : x.email_id
+        })
       })
-      // for(let i in result) {
-      //   all_chat_messages.push(i.message);
-      //   all_chat_send_by_user.push(i.email_id);
-      //   j++;
-      // }
-      console.log('number of elements present in db via model is : ', j);
-      
-      let result_final_message_set = {
-        message : all_chat_messages,
-        email_id : all_chat_send_by_user
-      }
-      console.log("result_final_message_set,", result_final_message_set)
-      // for()
-      return callback(null, result_final_message_set);
+      return callback(null, chats_format);
     }
   })
 }
