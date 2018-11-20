@@ -56,12 +56,16 @@ socket_io.on('connection', function(socket) {
    * socket_io('join', function(email_id)) {}
    */
   socket.on('chat_message', function(user_email_id, user_sent_message) {
+    console.log('Server.js');
+    
     let request_object = { 
       email_id : user_email_id,
       message : user_sent_message
     };
     server_socket_launch(request_object);
     function server_socket_launch(request_object) { 
+      console.log('Server ---> Controller');
+      
       controller_of_chat.chat_controller(request_object, (err, data) => {
         if(err) socket.emit('response_message', err);
         else socket.emit('response_message', data);    
