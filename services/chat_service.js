@@ -5,6 +5,7 @@
  * @version 2.2.01
  */
 const models = require('../app/models/chat_model');
+// const async = require('async');
 /**
  * @description Chat service for storing message
  */
@@ -20,6 +21,27 @@ exports.chat_service_function = function (req, callback) {
         }
     });
 }
+//for operations done on service part not on model part
+// async.waterfall([
+//     function (callback) {
+//         models.chatsDb(req, (err, data) => {
+
+//             if (err) {
+//                 callback(err);
+//             }
+//             else {
+//                 callback(null, data);
+//             }
+//         });
+//     }
+// ], function (err, result) {
+//     if(err) {
+//         return callback(err);
+//     }
+//     else {
+//         callback(result);
+//     }
+// });
 
 /**
  * @description Chat service for fetching data

@@ -67,8 +67,14 @@ socket_io.on('connection', function(socket) {
       console.log('Server ---> Controller');
       
       controller_of_chat.chat_controller(request_object, (err, data) => {
-        if(err) socket.emit('response_message', err);
-        else socket.emit('response_message', data);    
+        if(err) {
+          socket.emit('response_message', err);
+        }
+        else {
+          console.log('Response to emit on server.js page');
+          
+          socket.emit('response_message', data);    
+        }
       })
     }  
   })

@@ -10,10 +10,7 @@
 const service = require('../services/chat_service');
 
 exports.chat_controller = function(req, callback ) {
-    console.log('Controller');
-    service.chat_service_function(req, (err,data) => {
-        console.log('Controller --> Service');
-        
+    service.chat_service_function(req, (err,data) => {        
         if(err) {
             callback(err)
         }
