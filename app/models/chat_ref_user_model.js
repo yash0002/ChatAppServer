@@ -18,12 +18,16 @@ var Schema = mongoose.Schema;
  * creating new schema
  */
 var chatSchema = new Schema({
-    message: { type: String, required: true },
-    email_id: { type: String, required: true }
+  message: { type: String, required: true },
+  email_id: { type: String, required: true }
 // name: { type: String, required: true },
 // user: {type:Object, reference: 'users'}
-})
+});
 
+var personSchema = new Schema({
+  _id : Schema.Types.ObjectId,
+  email_id : String
+})
 /**
  * the schema is useless so far
  * we need to create a model to use it
@@ -31,6 +35,7 @@ var chatSchema = new Schema({
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
 var chats = mongoose.model('chats', chatSchema);
+var person = mongoose.model('person', personSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  * --------------------------------------------------------------------------------------------------------------------------
