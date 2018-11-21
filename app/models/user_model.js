@@ -25,7 +25,7 @@ var userSchema = new Schema({
  * instances of these Models are documents
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
-var user = mongoose.model('users', userSchema);
+var user = mongoose.model('user', userSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  */

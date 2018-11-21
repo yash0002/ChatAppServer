@@ -5,6 +5,7 @@
  * @version 2.2.01
  */
 const models = require('../app/models/chat_model');
+const models_chats = require('../app/models/chat_ref_user_model');
 const async = require('async');
 /**
  * @description Chat service for storing message
@@ -16,7 +17,7 @@ let result_to_send;
 async.waterfall([
 
     function (callback) {
-        models.chatsDb(req, (err, data) => {
+        models_chats.chatsDb(req, (err, data) => {
             if (err) {
                 callback(err);
             }
@@ -25,7 +26,7 @@ async.waterfall([
             }
         }) }, function(result, callback) {
             if(result != null ) {
-                models.chatsDb_fetch((err, data) => {
+                models_chats.chatsDb_fetch((err, data) => {
 
                     if (err) {                     
                         return callback(err);
@@ -60,7 +61,7 @@ async.waterfall([
  */
 exports.chat_fetch_service_function = function (callback) {
 
-    models.chatsDb_fetch((err, data) => {
+    models_chats.chatsDb_fetch((err, data) => {
 
         if (err) {
             return callback(err);
