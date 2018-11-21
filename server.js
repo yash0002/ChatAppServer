@@ -55,24 +55,20 @@ socket_io.on('connection', function(socket) {
    * 'socket_io' will be used only when we have to show all users including the one currently login & seeing
    * socket_io('join', function(email_id)) {}
    */
-  socket.on('chat_message', function(user_email_id, user_sent_message) {
-    console.log('Server.js');
+  socket.on('chat_message', function(request) {
     
-    let request_object = { 
-      email_id : user_email_id,
-      message : user_sent_message
+    let request_message = { 
+      email_id : request.email_id,
+      message : request.message_sent
     };
-    server_socket_launch(request_object);
-    function server_socket_launch(request_object) { 
-      console.log('Server ---> Controller');
-      
-      controller_of_chat.chat_controller(request_object, (err, data) => {
+
+    server_socket_launch(request_message);
+    function server_socket_launch(request_message) { 
+      controller_of_chat.chat_controller(request_message, (err, data) => {
         if(err) {
           socket.emit('response_message', err);
         }
         else {
-          console.log('Response to emit on server.js page');
-          
           socket.emit('response_message', data);    
         }
       })
