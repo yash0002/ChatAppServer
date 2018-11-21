@@ -17,20 +17,24 @@ var Schema = mongoose.Schema;
  * Every schema maps to MongoDB collection & define schemas shape within collection
  * creating new schema
  */
-var userSchema = new Schema({
-    message: { type: String, required: true },
-    email_id: { type: String, required: true }
+var chatSchema = new Schema({
+  message: { type: String, required: true },
+  email_id: { type: String, required: true }
 // name: { type: String, required: true },
 // user: {type:Object, reference: 'users'}
-})
+});
 
+var personSchema = new Schema({
+  _id : Schema.Types.ObjectId,
+  email_id : String,
+})
 /**
  * the schema is useless so far
  * we need to create a model to use it
  * instances of these Models are documents
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
-var chats = mongoose.model('chats', userSchema);
+var chats = mongoose.model('chats', chatSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  * --------------------------------------------------------------------------------------------------------------------------
