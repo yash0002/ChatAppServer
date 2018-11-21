@@ -36,11 +36,15 @@ var chats = mongoose.model('chats', userSchema);
  * --------------------------------------------------------------------------------------------------------------------------
  */
 /**
+ * @description prototype based accessing functionality
+ */
+function chatFunction() {
+
+}
+ /**
  * @description saving data inside database
  */
-exports.chatsDb = function(req, callback) {
-console.log('inside model server');
-
+ chatFunction.prototype.chatsDb = function(req, callback) {
   let newUser = new chats({
     message : req.message,
     email_id : req.email_id,
@@ -61,7 +65,7 @@ console.log('inside model server');
 /**
  * @description saving data inside database
  */
-exports.chatsDb_fetch = function(callback) {
+chatFunction.prototype.chatsDb_fetch = function(callback) {
 
   chats.find(function (err, result) {
     if(err) 
@@ -81,3 +85,8 @@ exports.chatsDb_fetch = function(callback) {
     }
   })
 }
+
+/**
+ * @exports exporting function
+ */
+module.exports = new chatFunction;

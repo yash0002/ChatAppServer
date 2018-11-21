@@ -30,11 +30,19 @@ var user = mongoose.model('users', userSchema);
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  */
 
+/**
+ * @description to create prototype
+ */
+function person () {
+
+}
+
  /**
   * @description Finding data inside database
   * make this available to our users in our Node applications
   */
-exports.loginDb = function(req, callback) {
+
+person.prototype.loginDb = function(req, callback) {
 
   user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
     if(result == null) {
@@ -51,7 +59,7 @@ exports.loginDb = function(req, callback) {
 /**
  * @description saving data inside database
  */
-exports.registerDb = function(req, callback) {
+person.prototype.registerDb = function(req, callback) {
 
   let newUser = new user({
     email_id:req.body.email,
@@ -75,7 +83,7 @@ exports.registerDb = function(req, callback) {
   * @description Finding data inside database
   * make this available to our users in our Node applications
   */
- exports.logoutDb = function(req, callback) {
+ person.prototype.logoutDb = function(req, callback) {
 
   user.findOne({email_id : req.body.log_user_email_id},function(err, result) {
     if(err) {
@@ -89,3 +97,5 @@ exports.registerDb = function(req, callback) {
     }
   })
 }
+
+module.exports = new person;
