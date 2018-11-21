@@ -24,7 +24,6 @@ var userSchema = new Schema({
 // user: {type:Object, reference: 'users'}
 })
 
-
 /**
  * the schema is useless so far
  * we need to create a model to use it
@@ -50,33 +49,10 @@ console.log('inside model server');
   newUser.save(function (err, result) {
     if(err) 
     {
-      console.log(err);
       return callback(err);
     }
     else {
       console.log('Message Inserted Successfully Done');
-      
-      // var result_obtain = function(callback) {
-      //                 chats.find(function (err, result) {
-      //                   if(err) 
-      //                   {
-      //                     console.log(err);
-      //                     return callback(err);
-      //                   }
-      //                   else {
-      //                     let chats_format = [];
-      //                     result.forEach(function(x) {
-      //                       chats_format.push({
-      //                         message : x.message,
-      //                         email_id : x.email_id
-      //                       })
-      //                     })
-      //                     console.log('After Insertion, Rettrieving');
-      //                     console.log(chats_format);                          
-      //                     return callback(null, chats_format);
-      //                   }
-      //                 })
-      // }
       return callback(null, result);
     }
   })
@@ -105,18 +81,3 @@ exports.chatsDb_fetch = function(callback) {
     }
   })
 }
-
-//   user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
-//     if(err) {
-
-//       console.log(err);      
-//       return callback(err);
-//     } 
-//     else {
-//       console.log('Login Successful');
-//       console.log('result of find-----------');
-//       console.log(result);     
-//       return callback(null, result);            
-//     }
-//   })
-// }
