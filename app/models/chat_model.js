@@ -56,28 +56,28 @@ console.log('inside model server');
     else {
       console.log('Message Inserted Successfully Done');
       
-      var result_obtain = function(callback) {
-                      chats.find(function (err, result) {
-                        if(err) 
-                        {
-                          console.log(err);
-                          return callback(err);
-                        }
-                        else {
-                          let chats_format = [];
-                          result.forEach(function(x) {
-                            chats_format.push({
-                              message : x.message,
-                              email_id : x.email_id
-                            })
-                          })
-                          console.log('After Insertion, Rettrieving');
-                          console.log(chats_format);                          
-                          return callback(null, chats_format);
-                        }
-                      })
-      }
-      return callback(null, result_obtain);
+      // var result_obtain = function(callback) {
+      //                 chats.find(function (err, result) {
+      //                   if(err) 
+      //                   {
+      //                     console.log(err);
+      //                     return callback(err);
+      //                   }
+      //                   else {
+      //                     let chats_format = [];
+      //                     result.forEach(function(x) {
+      //                       chats_format.push({
+      //                         message : x.message,
+      //                         email_id : x.email_id
+      //                       })
+      //                     })
+      //                     console.log('After Insertion, Rettrieving');
+      //                     console.log(chats_format);                          
+      //                     return callback(null, chats_format);
+      //                   }
+      //                 })
+      // }
+      return callback(null, result);
     }
   })
 }

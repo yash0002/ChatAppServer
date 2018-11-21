@@ -37,8 +37,8 @@ var user = mongoose.model('users', userSchema);
 exports.loginDb = function(req, callback) {
 
   user.findOne({email_id : req.body.email, password : req.body.passw},function(err, result) {
-    if(err) {
-      console.log(err);      
+    if(result == null) {
+      console.log('error in login ',err);      
       return callback(err);
     } 
     else {
