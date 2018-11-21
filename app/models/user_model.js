@@ -51,6 +51,7 @@ person.prototype.loginDb = function(req, callback) {
     } 
     else {
       console.log('Login Successful');
+      console.log(result);      
       return callback(null, result);            
     }
   })

@@ -8,9 +8,10 @@
  * @description Controller performing all functions of controls movement and sending response to client
  */
 const service = require('../services/chat_service');
+const service_ref = require('../services/chat_ref_service');
 
 exports.chat_controller = function(req, callback ) {
-    service.chat_service_function(req, (err,data) => {        
+    service_ref.chat_service_function(req, (err,data) => {        
         if(err) {
             callback(err)
         }
@@ -24,7 +25,7 @@ exports.chat_controller = function(req, callback ) {
  * @description controller to get traversing controlls & send response to client from server
  */
 exports.chat_fetch_controller = function(callback) {
-    service.chat_fetch_service_function( (err,data) => {
+    service_ref.chat_fetch_service_function( (err,data) => {
         if(err) {
             callback(err)
         }

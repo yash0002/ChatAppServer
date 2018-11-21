@@ -18,15 +18,10 @@ var Schema = mongoose.Schema;
  * creating new schema
  */
 var chatSchema = new Schema({
+    _id : { type: Schema.Types.ObjectId, ref:'user' },
   message: { type: String, required: true },
-  email_id: { type: Schema.Types.ObjectId, ref:'user' }
-// name: { type: String, required: true },
-// user: {type:Object, reference: 'users'}
+  email_id: { type: String }
 });
-
-// var personSchema = new Schema({
-//   email_id : {type : String, require}
-// })
 /**
  * the schema is useless so far
  * we need to create a model to use it
@@ -34,7 +29,6 @@ var chatSchema = new Schema({
  * passing modelName - 'users' & schema - 'userSchema' in mongoose.model
  */
 var chatsnew = mongoose.model('chatsnew', chatSchema);
-// var person = mongoose.model('person', personSchema);
 /**
  * @description Model created & now functions built below to perform different task on database via model having schema in it
  * --------------------------------------------------------------------------------------------------------------------------
@@ -48,14 +42,15 @@ function chatFunction() {
  /**
  * @description saving data inside database
  */
- chatFunction.prototype.chatsDb = function(req, callback) {
-  let newUser = new chatsnew({
+ chatFunction.prototype.chatsDb = function(req, result, callback) {
+  let newChat = new chatsnew({
+    _id : result._id,
     message : req.message,
-    // email_id : req.email_id,
+    email_id : result.email_id
   });
 //   let user1 = new user({email_id : req.email_id});
 //   newUser.email_id.push(req.email_id)//user1);
-  newUser.save(function (err, result) {
+  newChat.save(function (err, result) {
     if(err) 
     {
         console.log('error on saving via populating');        
@@ -76,7 +71,8 @@ function chatFunction() {
  */
 chatFunction.prototype.chatsDb_fetch = function(callback) {
 
-  chatsnew.find().populate('email_id')
+//   chatsnew.findOne({email_id : 'bridge@gmail.com'}).populate('email_id')
+chatsnew.find().populate('email_id')
   .exec(function (err, result) {
     if(err) 
     {

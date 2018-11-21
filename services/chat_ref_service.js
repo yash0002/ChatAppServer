@@ -5,6 +5,8 @@
  * @version 2.2.01
  */
 const models = require('../app/models/chat_model');
+const user_model = require('../app/models/user_model');
+const models_chats = require('../app/models/chat_ref_user_model');
 const async = require('async');
 /**
  * @description Chat service for storing message
@@ -16,16 +18,20 @@ let result_to_send;
 async.waterfall([
 
     function (callback) {
-        models.chatsDb(req, (err, data) => {
+
+        user_model.loginDb(req, (err, data) => {
             if (err) {
                 callback(err);
             }
             else {             
-                callback(null, data);
+                callback(null, req, data);
             }
-        }) }, function(result, callback) {
+
+        }) }, function(req, result, callback) {
+            
             if(result != null ) {
-                models.chatsDb_fetch((err, data) => {
+            
+                models_chats.chatsDb(req, result, (err, data) => {
 
                     if (err) {                     
                         return callback(err);
@@ -38,14 +44,32 @@ async.waterfall([
             else {
                 callback(result);
             }
-        }], function (err, result_fetch){
+
+        }, function(callback) {
+            
+            if(result != null ) {
+                models_chats.chatsDb_fetch((err, data) => {
+
+                    if (err) {                     
+                        return callback(err);
+                    }
+                    else {
+                        callback(null, data);
+                    }
+                });
+            }
+            else {
+                callback(result);
+            }
+        }
+
+    ], function (err, result_fetch){
     if(err) {
         console.log(err);           
     }
     else {      
         result_to_send = result_fetch;
     }
-    
     if(result_to_send == null)
     {
         return callback(null);
@@ -61,7 +85,7 @@ async.waterfall([
  */
 exports.chat_fetch_service_function = function (callback) {
 
-    models.chatsDb_fetch((err, data) => {
+    models_chats.chatsDb_fetch((err, data) => {
 
         if (err) {
             return callback(err);
