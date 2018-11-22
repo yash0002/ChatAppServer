@@ -62,6 +62,9 @@ socket_io.on('connection', function(socket) {
       message : request.message_sent
     };
 
+    console.log('Request on server page');
+    console.log(request_message);
+    
     server_socket_launch(request_message);
     function server_socket_launch(request_message) { 
       controller_of_chat.chat_controller(request_message, (err, data) => {

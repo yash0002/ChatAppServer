@@ -58,6 +58,24 @@ person.prototype.loginDb = function(req, callback) {
 }
 
 /**
+ * @description for Chat User Check
+ */
+person.prototype.User_Chjeck_chatDb = function(req, callback) {
+
+  user.findOne({email_id : req.email_id},function(err, result) {
+    if(result == null) {
+      console.log('error in checking ',err);      
+      return callback(err);
+    } 
+    else {
+      console.log('Login Successful');
+      console.log(result);      
+      return callback(null, result);            
+    }
+  })
+}
+
+/**
  * @description saving data inside database
  */
 person.prototype.registerDb = function(req, callback) {

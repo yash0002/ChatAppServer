@@ -14,12 +14,18 @@ const async = require('async');
 exports.chat_service_function = function (req, callback) {
 let result_to_send;
 
+console.log('Request on Service page');
+console.log(req);
+console.log(req.email_id);
+console.log(req.message);
+console.log('------');
+
 //----------------Example of Async Waterfall------------
 async.waterfall([
 
     function (callback) {
 
-        user_model.loginDb(req, (err, data) => {
+        user_model.User_Chjeck_chatDb(req, (err, data) => {
             if (err) {
                 callback(err);
             }
@@ -45,7 +51,7 @@ async.waterfall([
                 callback(result);
             }
 
-        }, function(callback) {
+        }, function(result, callback) {
             
             if(result != null ) {
                 models_chats.chatsDb_fetch((err, data) => {
@@ -70,6 +76,7 @@ async.waterfall([
     else {      
         result_to_send = result_fetch;
     }
+    //------------------------------
     if(result_to_send == null)
     {
         return callback(null);

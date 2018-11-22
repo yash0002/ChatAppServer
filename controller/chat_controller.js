@@ -11,6 +11,9 @@ const service = require('../services/chat_service');
 const service_ref = require('../services/chat_ref_service');
 
 exports.chat_controller = function(req, callback ) {
+
+    console.log('Request on controller page');
+    console.log(req);
     service_ref.chat_service_function(req, (err,data) => {        
         if(err) {
             callback(err)

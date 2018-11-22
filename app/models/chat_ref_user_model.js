@@ -18,7 +18,7 @@ var Schema = mongoose.Schema;
  * creating new schema
  */
 var chatSchema = new Schema({
-    _id : { type: Schema.Types.ObjectId, ref:'user' },
+  user_id : { type: Schema.Types.ObjectId, ref:'user' },
   message: { type: String, required: true },
   email_id: { type: String }
 });
@@ -43,13 +43,14 @@ function chatFunction() {
  * @description saving data inside database
  */
  chatFunction.prototype.chatsDb = function(req, result, callback) {
+
+  console.log('Request on model page');
+  console.log(req.message);
   let newChat = new chatsnew({
-    _id : result._id,
+    user_id : result._id,
     message : req.message,
     email_id : result.email_id
   });
-//   let user1 = new user({email_id : req.email_id});
-//   newUser.email_id.push(req.email_id)//user1);
   newChat.save(function (err, result) {
     if(err) 
     {
@@ -72,7 +73,7 @@ function chatFunction() {
 chatFunction.prototype.chatsDb_fetch = function(callback) {
 
 //   chatsnew.findOne({email_id : 'bridge@gmail.com'}).populate('email_id')
-chatsnew.find().populate('email_id')
+chatsnew.find().populate('newChat')
   .exec(function (err, result) {
     if(err) 
     {
