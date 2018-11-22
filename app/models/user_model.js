@@ -111,7 +111,7 @@ person.prototype.registerDb = function(req, callback) {
       return callback(err);
     } 
     else {
-      console.log('Logou Successful');
+      console.log('Logout Successful');
       return callback(null, result);            
     }
   })

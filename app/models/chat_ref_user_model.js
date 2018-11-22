@@ -59,8 +59,8 @@ function chatFunction() {
       return callback(err);
     }
     else {
-        console.log('data on save via populating');        
-      console.log(result);
+      //   console.log('data on save via populating');        
+      // console.log(result);
       console.log('Message Inserted Successfully Done');
       return callback(null, result);
     }
@@ -82,8 +82,8 @@ chatsnew.find().populate('newChat')
       return callback(err);
     }
     else {
-        console.log('Result via populating');
-        console.log(result);
+        // console.log('Result via populating');
+        // console.log(result);
         
       let chats_format = [];
       result.forEach(function(x) {
