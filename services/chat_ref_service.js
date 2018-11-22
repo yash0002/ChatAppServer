@@ -8,6 +8,7 @@ const models = require('../app/models/chat_model');
 const user_model = require('../app/models/user_model');
 const models_chats = require('../app/models/chat_ref_user_model');
 const async = require('async');
+var nodemailer = require('nodemailer');
 /**
  * @description Chat service for storing message
  */
