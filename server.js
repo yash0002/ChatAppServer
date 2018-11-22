@@ -72,7 +72,8 @@ socket_io.on('connection', function(socket) {
           socket.emit('response_message', err);
         }
         else {
-          socket.emit('response_message', data);    
+          socket_io.broadcast.emit('response_message', data);
+          // socket.emit('response_message', data);    
         }
       })
     }  
@@ -88,7 +89,8 @@ socket_io.on('connection', function(socket) {
         socket.emit('response_message', err);
       }
       else {
-        socket.emit('response_message', data);    
+        // socket.emit('response_message', data);    
+        socket.broadcast.emit('response_message', data);
       }
     })
   }

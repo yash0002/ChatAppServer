@@ -45,8 +45,32 @@ exports.login_service_function = function(req, callback) {
     
     models.loginDb(req, (err, data) => {
 
-        if(err) return callback(err);
-        else callback(null, data);
+        if(err) {
+            return callback(err);
+        }
+        else {
+            let login_string = `Activity Review : Account Login on ${new Date().toDateString()} at ${new Date().toLocaleString()}`;
+            const mailOptions = {
+                from: 'labzbridge02@gmail.com', // sender address
+                to: req.body.email, // list of receivers
+                subject: 'login activity', // Subject line
+                html: `<p>${login_string}<br/><br/> Check It ! </p>`// plain text body
+            };
+
+            transporter.sendMail(mailOptions, function (err, info) {
+                if(err) {
+                    console.log('Login Email not sent');
+                    console.log(err)
+                }
+                else {
+                    console.log('Login Email Sent');
+                    console.log(info);
+                }
+                    
+            });
+
+            callback(null, data);
+        }
     });
 }
 
@@ -71,16 +95,15 @@ exports.register_service_function = function(req, callback) {
 
             transporter.sendMail(mailOptions, function (err, info) {
                 if(err) {
-                    console.log('Email not sent');
-                    
+                    console.log('Register Email not sent');
                     console.log(err)
                 }
                 else {
-                    console.log('email Sent');
+                    console.log('Register Email Sent');
                     console.log(info);
                 }
                     
-                });
+            });
 
             return callback(null, data);
         }
