@@ -64,21 +64,29 @@ exports.login_controller = function (req, res, next) {
  * @description Controller for register & sending response to client
  */
 exports.register_controller = function (req, res) {
+    try {
+        service.register_service_function(req, (err, data) => {
 
-    service.register_service_function(req, (err, data) => {
-
-        if (err) res.status(400).send(err)
-        else res.status(200).send(data);
-    })
+            if (err) res.status(400).send(err)
+            else res.status(200).send(data);
+        })
+    }
+    catch(err) {
+        next(err);
+    }
 }
 
 exports.logout_controller = function (req, res) {
+    try {
+        service.logout_service_function(req, (err, data) => {
 
-    service.logout_service_function(req, (err, data) => {
-
-        if (err) res.status(400).send(err)
-        else res.status(200).send(data);
-    })
+            if (err) res.status(400).send(err)
+            else res.status(200).send(data);
+        })
+    }
+    catch (err) {
+        next(err);
+    }
 }
 /**
  * @description to verify token came from client side
