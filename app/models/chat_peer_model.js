@@ -22,7 +22,7 @@ var chatSchema = new Schema({
   receiver_id : { type: Schema.Types.ObjectId, ref:'user' },
   message: { type: String, required: true },
   sender_email_id: { type: String },
-  receiver_email_id: {type: string}
+  receiver_email_id: {type: String}
 });
 /**
  * the schema is useless so far

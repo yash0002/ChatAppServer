@@ -90,11 +90,12 @@ socket_io.on('connection', function(socket) {
       message_sent : message_sent
   };
 
-    console.log('Request on server page');
+    console.log('Request on server page -- peer');
     console.log(request_message);
     
     server_socket_launch(request_message);
-    function server_socket_launch(request_message) { 
+    function server_socket_launch(request_message) {
+    console.log(request_message); 
       controller_of_chat.chat_peer_controller(request_message, (err, data) => {
         if(err) {
           socket.emit('response_peer_message', err);
@@ -105,6 +106,7 @@ socket_io.on('connection', function(socket) {
         }
       })
     }
+  })
 
   /**
    * @description to emit all messages to login_user
