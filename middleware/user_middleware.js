@@ -76,7 +76,7 @@ exports.register_middleware = function (req, res, next) {
 /**
  * @description function formed as to perform middleware work for registration
  */
-exports.logout_middleware = function (req, res, next) {
+exports.logout_middleware = function (err, req, res, next) {
     if(req.body.email === null || req.body.email === undefined || req.body.email.length === 0) {
         console.log('Email Error');
         next(err);
