@@ -49,7 +49,7 @@ exports.login_service_function = function(req, callback) {
             return callback(err);
         }
         else {
-            let login_string = `Activity Review : Account Login on ${new Date().toDateString()} at ${new Date().toLocaleString()}`;
+            let login_string = `Activity Review : Account Login on ${new Date().toDateString()} at ${new Date().toLocaleTimeString()}`;
             const mailOptions = {
                 from: 'labzbridge02@gmail.com', // sender address
                 to: req.body.email, // list of receivers

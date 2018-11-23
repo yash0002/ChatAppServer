@@ -37,3 +37,34 @@ exports.chat_fetch_controller = function(callback) {
         }
     })
 }
+
+/**
+ * @description Controller for peer chats Saving
+ */
+exports.chat_peer_controller = function(req, callback ) {
+
+    console.log('Request on controller page');
+    console.log(req);
+    service_ref.chat_service_function(req, (err,data) => {        
+        if(err) {
+            callback(err)
+        }
+        else {
+            callback(null, data)
+        }
+    })
+}
+
+/**
+ * @description Controller for peer chats fetching chats
+ */
+exports.chat_fetch_controller = function(callback) {
+    service_ref.chat_fetch_service_function( (err,data) => {
+        if(err) {
+            callback(err)
+        }
+        else {
+            callback(null, data)
+        }
+    })
+}
