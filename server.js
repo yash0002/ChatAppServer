@@ -87,7 +87,7 @@ socket_io.on('connection', function(socket) {
     let request_message = {
       sender_email_id : request.sender_email_id,
       receiver_email_id : request.receiver_email_id,
-      message_sent : message_sent
+      message_sent : request.message_sent
   };
 
     console.log('Request on server page -- peer');

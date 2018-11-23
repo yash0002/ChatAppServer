@@ -47,9 +47,9 @@ function chatFunction() {
  chatFunction.prototype.peerschatDb_save = function(req, result1, result2, callback) {
 
   console.log('Request on model page');
-  console.log(req.message);
+  console.log(req.message_sent);
   
-  let newPeerChat = new chatsnew({
+  let newPeerChat = new peerschat({
     sender_id : result1._id,
     receiver_id : result2._id,
     message : req.message_sent,
