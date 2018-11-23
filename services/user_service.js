@@ -84,18 +84,18 @@ exports.login_service_function = function(req, callback) {
                 html: `<p>${login_string}<br/><br/> Check It ! </p>`// plain text body
             };
 
-            nexmo.message.sendSms(
-                9928697100, '8906493110', 'yo',
-                  (err, responseData) => {
-                    if (err) {
-                        console.log('message not sent');                        
-                      console.log(err);
-                    } else {
-                        console.log('message sent');                        
-                      console.dir(responseData);
-                    }
-                }
-            );
+            // nexmo.message.sendSms(
+            //     9928697100, '8906493110', 'yo',
+            //       (err, responseData) => {
+            //         if (err) {
+            //             console.log('message not sent');                        
+            //           console.log(err);
+            //         } else {
+            //             console.log('message sent');                        
+            //           console.dir(responseData);
+            //         }
+            //     }
+            // );
             
 
             transporter.sendMail(mailOptions, function (err, info) {
