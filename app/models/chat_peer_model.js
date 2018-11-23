@@ -49,6 +49,13 @@ function chatFunction() {
   console.log('Request on model page');
   console.log(req.message_sent);
   
+
+  console.log('result1 on service before save');
+  console.log(result1);
+  
+  console.log('result2 on service before save');
+  console.log(result2);
+
   let newPeerChat = new peerschat({
     sender_id : result1._id,
     receiver_id : result2._id,

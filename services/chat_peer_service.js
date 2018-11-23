@@ -58,7 +58,12 @@ async.waterfall([
         }, function(req, result1, result2, callback) {
             
             if(result2 != null ) {
-            
+                console.log('result1 on service before save');
+                console.log(result1);
+                
+                console.log('result2 on service before save');
+                console.log(result2);
+
                 chat_peer_model.peerschatDb_save(req, result1, result2, (err, data) => {
 
                     if (err) {                     
