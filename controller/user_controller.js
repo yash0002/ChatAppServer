@@ -17,58 +17,66 @@ const jwt = require('jsonwebtoken');
 var payload = {
     data1: "Data 1",
     data2: "Data 2",
-   };
+};
 
 // PRIVATE and PUBLIC key
 // var privateKEY  = fs.readFileSync('../authentication/private.key', 'utf8');
 // var publicKEY  = fs.readFileSync('../authentication/public.key', 'utf8');
 var privateKEY = 'privateKey';
 
-var i  = 'bridgelabz';          // Issuer 
-var s  = 'login - some@user.com';        // Subject 
-var a  = 'http://mysoftcorp.in'; // Audience
+var i = 'bridgelabz';          // Issuer 
+var s = 'login - some@user.com';        // Subject 
+var a = 'http://mysoftcorp.in'; // Audience
 
 // SIGNING OPTIONS
 var signOptions = {
- issuer:  i,
- subject:  s,
- audience:  a,
- expiresIn:  "1h",//5000ms
-//  algorithm:  "RS256"
+    issuer: i,
+    subject: s,
+    audience: a,
+    expiresIn: "1h",//5000ms
+    //  algorithm:  "RS256"
 };
 
-var token = jwt.sign(payload, privateKEY, signOptions);
-console.log("Token - " + token);
+// var token = jwt.sign(payload, privateKEY, signOptions);
+// console.log("Token - " + token);
 
-exports.login_controller = function(req, res) {
+exports.login_controller = function (req, res, next) {
+    try {
+        service.login_service_function(req, (err, data) => {
 
-    service.login_service_function(req, (err,data) => {
-       
-        if(err) {
-            res.status(400).send(err)
-        }
-        else {
-            res.status(200).send(data);
-        }
-    })
+            if (err) {
+                res.status(400).send(err);
+            }
+            else {
+
+                var token = jwt.sign(payload, privateKEY, signOptions);
+                console.log("Token - " + token);
+
+                res.status(200).send(data);
+            }
+        })
+    }
+    catch (err) {
+        next(err);
+    }
 }
 /**
  * @description Controller for register & sending response to client
  */
-exports.register_controller = function(req, res) {
-    
-    service.register_service_function(req, (err,data) => {
-        
-        if(err) res.status(400).send(err)
-        else res.status(200).send(data);        
+exports.register_controller = function (req, res) {
+
+    service.register_service_function(req, (err, data) => {
+
+        if (err) res.status(400).send(err)
+        else res.status(200).send(data);
     })
 }
 
-exports.logout_controller = function(req, res) {
+exports.logout_controller = function (req, res) {
 
-    service.logout_service_function(req, (err,data) => {
-       
-        if(err) res.status(400).send(err)
+    service.logout_service_function(req, (err, data) => {
+
+        if (err) res.status(400).send(err)
         else res.status(200).send(data);
     })
 }

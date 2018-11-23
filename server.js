@@ -1,7 +1,7 @@
 /**
  * @description Server Side (complete node js structure & database schema based connection)
  * @author Yash
- * @version 11.1
+ * @version 21.1.2
  * @module Server
  * @since 12/11/2018
  */
@@ -35,7 +35,7 @@ server = app.listen(3001, () => {
 function startMongo(db_url) {
   mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true });
   mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb'); });
-  mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb :' + db_url); });
+  mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb on port  :' + db_url); });
 }
 /**
  * making socket connecion ready & ready to listen on port
@@ -145,6 +145,16 @@ socket_io.on('connection', function (socket) {
 socket_io.on('disconnect', function () {
   console.log('Client Disconnected on Server Side');
   //socket.broadcast.emit( "userdisconnect" ,' user has left')  
+})
+
+app.get("/", function (req, res) {
+  throw new Error("BROKEN"); // Express will catch this on its own.
+});
+
+app.use(function (err, req, res, next) {
+  // console.error(err.stack)
+  console.log(err);  
+  res.status(500).send('Something broke ! Internal Server Error')
 })
 
 /**

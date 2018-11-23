@@ -10,9 +10,10 @@
  * @description function formed as to perform middleware work for login
  */
 exports.login_middleware = function login_middleware(req, res, next) {
-    if(req.body == null) {
+    if(req.body.email == null) {
         console.log('Something left empty');
-    }
+        next(err);
+    } else if (req.body.passw === null && req.body.passw === '')
     else {
         if(/^[a-z](\.?[a-z0-9]){3,}@g(oogle)?mail\.com$/g.test(req.body.email))
         {
