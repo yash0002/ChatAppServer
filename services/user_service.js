@@ -2,7 +2,8 @@
  * @description this is service controlling the business logic and traversing controls from controller to model and vice versa
  * @author  Yash
  * @since   14/11/2018
- * @version 2.2.01
+ * @version 2.2.
+ * @requires nodemailer, models, nexmo
  */
 const models = require('../app/models/user_model');
 var nodemailer = require('nodemailer');
@@ -13,6 +14,32 @@ var transporter = nodemailer.createTransport({
            pass: 'bridge01!'
        }
    });
+
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+    apiKey: '123',
+    apiSecret: '123'
+});
+
+/**
+ * @description Sending messages Format
+ */
+// const Nexmo = require('nexmo');
+// const nexmo = new Nexmo({
+//     apiKey: YOUR_API_KEY,
+//     apiSecret: YOUR_API_SECRET
+// });
+
+// nexmo.message.sendSms(
+//     YOUR_VIRTUAL_NUMBER, '15105551234', 'yo',
+//       (err, responseData) => {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           console.dir(responseData);
+//         }
+//       }
+//    );
 
 /**
  * @description Way to setup nodemailer to send mails via gmail service
@@ -56,6 +83,20 @@ exports.login_service_function = function(req, callback) {
                 subject: 'login activity', // Subject line
                 html: `<p>${login_string}<br/><br/> Check It ! </p>`// plain text body
             };
+
+            nexmo.message.sendSms(
+                9928697100, '8906493110', 'yo',
+                  (err, responseData) => {
+                    if (err) {
+                        console.log('message not sent');                        
+                      console.log(err);
+                    } else {
+                        console.log('message sent');                        
+                      console.dir(responseData);
+                    }
+                }
+            );
+            
 
             transporter.sendMail(mailOptions, function (err, info) {
                 if(err) {
