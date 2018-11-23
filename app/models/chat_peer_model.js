@@ -18,11 +18,11 @@ var Schema = mongoose.Schema;
  * creating new schema
  */
 var chatSchema = new Schema({
-  sender_id : {type : Schema.Types.ObjectId, ref: 'user'},
-  receiver_id : { type: Schema.Types.ObjectId, ref:'user' },
+  sender_id: { type: Schema.Types.ObjectId, ref: 'user' },
+  receiver_id: { type: Schema.Types.ObjectId, ref: 'user' },
   message: { type: String, required: true },
   sender_email_id: { type: String },
-  receiver_email_id: {type: String}
+  receiver_email_id: { type: String }
 });
 /**
  * the schema is useless so far
@@ -41,32 +41,31 @@ var peerschat = mongoose.model('peerschat', chatSchema);
 function chatFunction() {
 
 }
- /**
- * @description saving data inside database
- */
- chatFunction.prototype.peerschatDb_save = function(req, result1, result2, callback) {
+/**
+* @description saving data inside database
+*/
+chatFunction.prototype.peerschatDb_save = function (req, result1, result2, callback) {
 
   // console.log('Request on model page');
   // console.log(req.message_sent);
-  
+
 
   // console.log('result1 on service before save');
   // console.log(result1);
-  
+
   // console.log('result2 on service before save');
   // console.log(result2);
 
   let newPeerChat = new peerschat({
-    sender_id : result1._id,
-    receiver_id : result2._id,
-    message : req.message_sent,
-    sender_email_id : result1.email_id,
-    receiver_email_id : result2.email_id
+    sender_id: result1._id,
+    receiver_id: result2._id,
+    message: req.message_sent,
+    sender_email_id: result1.email_id,
+    receiver_email_id: result2.email_id
   });
 
   newPeerChat.save(function (err, result) {
-    if(err) 
-    {
+    if (err) {
       // console.log('error on saving on peer');        
       // console.log(err);
       return callback(err);
@@ -83,33 +82,32 @@ function chatFunction() {
 /**
  * @description saving data inside database
  */
-chatFunction.prototype.peerschatDb_fetch = function(callback) {
+chatFunction.prototype.peerschatDb_fetch = function (callback) {
 
-//   chatsnew.findOne({email_id : 'bridge@gmail.com'}).populate('email_id')
+  //   chatsnew.findOne({email_id : 'bridge@gmail.com'}).populate('email_id')
 
-peerschat.find().populate('newPeerChat')
-  .exec(function (err, result) {
-    if(err) 
-    {
-      //   console.log('error on reading - peer');        
-      // console.log(err);
-      return callback(err);
-    }
-    else {
+  peerschat.find().populate('newPeerChat')
+    .exec(function (err, result) {
+      if (err) {
+        //   console.log('error on reading - peer');        
+        // console.log(err);
+        return callback(err);
+      }
+      else {
         // console.log('Result on reading - peer');
         // console.log(result);
-        
-      let peer_chats_format = [];
-      result.forEach(function(x) {
-        peer_chats_format.push({
-          message : x.message,
-          sender_email_id : x.sender_email_id,
-          receiver_email_id : x.receiver_email_id
+
+        let peer_chats_format = [];
+        result.forEach(function (x) {
+          peer_chats_format.push({
+            message: x.message,
+            sender_email_id: x.sender_email_id,
+            receiver_email_id: x.receiver_email_id
+          })
         })
-      })
-      return callback(null, peer_chats_format);
-    }
-  })
+        return callback(null, peer_chats_format);
+      }
+    })
 }
 
 /**

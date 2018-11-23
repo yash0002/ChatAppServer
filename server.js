@@ -17,9 +17,9 @@ app.use(cors());
  * @description Parsing the request get by client
  */
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', routes);
-server = app.listen(3001,()=>{
+server = app.listen(3001, () => {
   let db_url = db_connect.url;
   startMongo(db_url);
   console.log('server is up and running');
@@ -32,11 +32,10 @@ server = app.listen(3001,()=>{
  * @description cheking database connectivity
  * @param {String} db_url 
  */
-function startMongo(db_url)
-{
-  mongoose.connect(db_url, {useCreateIndex: true, useNewUrlParser: true});
-  mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb');  });
-  mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb :'+ db_url);  });
+function startMongo(db_url) {
+  mongoose.connect(db_url, { useCreateIndex: true, useNewUrlParser: true });
+  mongoose.connection.on('error', (error) => { console.log('Connection error with MongoDb'); });
+  mongoose.connection.on('open', () => { console.log('Successfully Connected to MongoDb :' + db_url); });
 }
 /**
  * making socket connecion ready & ready to listen on port
@@ -46,7 +45,7 @@ const controller_of_chat = require('./controller/chat_controller');
 /**
  * @description when client connected to socket, this below code runs
  */
-socket_io.on('connection', function(socket) {
+socket_io.on('connection', function (socket) {
   console.log('Client Connected on Server Side');
   /**
    * @description 'socket.on' will be used only when we have to show how many are login to all users except the person login and seeing
@@ -55,20 +54,20 @@ socket_io.on('connection', function(socket) {
    * 'socket_io' will be used only when we have to show all users including the one currently login & seeing
    * socket_io('join', function(email_id)) {}
    */
-  socket.on('chat_message', function(request) {
-    
-    let request_message = { 
-      email_id : request.email_id,
-      message : request.message_sent
+  socket.on('chat_message', function (request) {
+
+    let request_message = {
+      email_id: request.email_id,
+      message: request.message_sent
     };
 
     // console.log('Request on server page');
     // console.log(request_message);
-    
+
     server_socket_launch(request_message);
-    function server_socket_launch(request_message) { 
+    function server_socket_launch(request_message) {
       controller_of_chat.chat_controller(request_message, (err, data) => {
-        if(err) {
+        if (err) {
           socket.emit('response_message', err);
         }
         else {
@@ -82,22 +81,22 @@ socket_io.on('connection', function(socket) {
   /**
    * @description This on connection is for peer messages
    */
-  socket.on('chat_peer_message', function(request) {
+  socket.on('chat_peer_message', function (request) {
 
     let request_message = {
-      sender_email_id : request.sender_email_id,
-      receiver_email_id : request.receiver_email_id,
-      message_sent : request.message_sent
-  };
+      sender_email_id: request.sender_email_id,
+      receiver_email_id: request.receiver_email_id,
+      message_sent: request.message_sent
+    };
 
     // console.log('Request on server page -- peer');
     // console.log(request_message);
-    
+
     server_socket_launch(request_message);
     function server_socket_launch(request_message) {
-    // console.log(request_message); 
+      // console.log(request_message); 
       controller_of_chat.chat_peer_controller(request_message, (err, data) => {
-        if(err) {
+        if (err) {
           socket.emit('response_peer_message', err);
         }
         else {
@@ -114,7 +113,7 @@ socket_io.on('connection', function(socket) {
   server_socket_launch();
   function server_socket_launch() {
     controller_of_chat.chat_fetch_controller((err, data) => {
-      if(err) {
+      if (err) {
         socket.emit('response_message', err);
       }
       else {
@@ -130,7 +129,7 @@ socket_io.on('connection', function(socket) {
   server_socket_launch_peer();
   function server_socket_launch_peer() {
     controller_of_chat.chat_peer_fetch_controller((err, data) => {
-      if(err) {
+      if (err) {
         socket.emit('response_peer_message', err);
       }
       else {

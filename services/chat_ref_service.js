@@ -13,34 +13,35 @@ var nodemailer = require('nodemailer');
  * @description Chat service for storing message
  */
 exports.chat_service_function = function (req, callback) {
-let result_to_send;
+    let result_to_send;
 
-console.log('Request on Service page');
-console.log(req);
-console.log(req.email_id);
-console.log(req.message);
-console.log('------');
+    console.log('Request on Service page');
+    console.log(req);
+    console.log(req.email_id);
+    console.log(req.message);
+    console.log('------');
 
-//----------------Example of Async Waterfall------------
-async.waterfall([
+    //----------------Example of Async Waterfall------------
+    async.waterfall([
 
-    function (callback) {
+        function (callback) {
 
-        user_model.User_Chjeck_chatDb(req, (err, data) => {
-            if (err) {
-                callback(err);
-            }
-            else {             
-                callback(null, req, data);
-            }
+            user_model.User_Chjeck_chatDb(req, (err, data) => {
+                if (err) {
+                    callback(err);
+                }
+                else {
+                    callback(null, req, data);
+                }
 
-        }) }, function(req, result, callback) {
-            
-            if(result != null ) {
-            
+            })
+        }, function (req, result, callback) {
+
+            if (result != null) {
+
                 models_chats.chatsDb(req, result, (err, data) => {
 
-                    if (err) {                     
+                    if (err) {
                         return callback(err);
                     }
                     else {
@@ -52,12 +53,12 @@ async.waterfall([
                 callback(result);
             }
 
-        }, function(result, callback) {
-            
-            if(result != null ) {
+        }, function (result, callback) {
+
+            if (result != null) {
                 models_chats.chatsDb_fetch((err, data) => {
 
-                    if (err) {                     
+                    if (err) {
                         return callback(err);
                     }
                     else {
@@ -70,22 +71,21 @@ async.waterfall([
             }
         }
 
-    ], function (err, result_fetch){
-    if(err) {
-        console.log(err);           
-    }
-    else {      
-        result_to_send = result_fetch;
-    }
-    //------------------------------
-    if(result_to_send == null)
-    {
-        return callback(null);
-    }
-    else {
-        return callback(result_to_send);
-    }
-});
+    ], function (err, result_fetch) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            result_to_send = result_fetch;
+        }
+        //------------------------------
+        if (result_to_send == null) {
+            return callback(null);
+        }
+        else {
+            return callback(result_to_send);
+        }
+    });
 }
 
 /**

@@ -14,13 +14,13 @@ const service_peer_service = require('../services/chat_peer_service');
 /**
  * @description Saving Chats in Group Chat Db
  */
-exports.chat_controller = function(req, callback ) {
+exports.chat_controller = function (req, callback) {
 
     // console.log('Request on controller page');
     // console.log(req);
     // console.log(typeof req);
-    service_ref.chat_service_function(req, (err,data) => {        
-        if(err) {
+    service_ref.chat_service_function(req, (err, data) => {
+        if (err) {
             callback(err)
         }
         else {
@@ -32,9 +32,9 @@ exports.chat_controller = function(req, callback ) {
 /**
  * @description controller to get traversing controlls & send response to client from server - Group Chats
  */
-exports.chat_fetch_controller = function(callback) {
-    service_ref.chat_fetch_service_function( (err,data) => {
-        if(err) {
+exports.chat_fetch_controller = function (callback) {
+    service_ref.chat_fetch_service_function((err, data) => {
+        if (err) {
             callback(err)
         }
         else {
@@ -46,12 +46,12 @@ exports.chat_fetch_controller = function(callback) {
 /**
  * @description Controller for peer chats Saving
  */
-exports.chat_peer_controller = function(req, callback ) {
+exports.chat_peer_controller = function (req, callback) {
 
     // console.log('Request on controller page');
     // console.log(req);
-    service_peer_service.chat_peer_service_function(req, (err,data) => {        
-        if(err) {
+    service_peer_service.chat_peer_service_function(req, (err, data) => {
+        if (err) {
             callback(err)
         }
         else {
@@ -63,9 +63,9 @@ exports.chat_peer_controller = function(req, callback ) {
 /**
  * @description Controller for peer chats fetching chats
  */
-exports.chat_peer_fetch_controller = function(callback) {
-    service_peer_service.chat_peer_fetch_service_function( (err,data) => {
-        if(err) {
+exports.chat_peer_fetch_controller = function (callback) {
+    service_peer_service.chat_peer_fetch_service_function((err, data) => {
+        if (err) {
             callback(err)
         }
         else {
