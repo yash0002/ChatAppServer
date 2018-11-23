@@ -43,6 +43,7 @@ async.waterfall([
          }, function(result1, callback) {
             
             sender_id_user_db = result1._id;
+
             user_model.User_Check_peer_chatDb(receiver_email_id_in_request, (err, data) => {
                 if(result1 != null) {
 
@@ -50,7 +51,7 @@ async.waterfall([
                         callback(err);
                     }
                     else {             
-                        callback(null, req, result1, data);
+                        callback(null, data);
                     }
         
                 }
@@ -59,8 +60,10 @@ async.waterfall([
                 }
                 
             })
-        }, function(req, result1, result2, callback) {
+        }, function(result2, callback) {
             
+            receiver_id_user_db = result2._id;
+
             if(result2 != null ) {
                 // console.log('result1 on service before save');
                 // console.log(result1);
@@ -68,7 +71,20 @@ async.waterfall([
                 // console.log('result2 on service before save');
                 // console.log(result2);
 
-                chat_peer_model.peerschatDb_save(req, result1, result2, (err, data) => {
+                console.log('Service Page -----');
+                console.log(sender_id_user_db);
+                console.log(receiver_id_user_db);
+                console.log(message);
+                
+                request_data = [{
+                    sender_id : sender_id_user_db,
+                    receiver_id : receiver_id_user_db,
+                    message : message,
+                    sender_email_id : sender_email_id_in_request,
+                    receiver_email_id : receiver_email_id_in_request
+                }]
+                
+                chat_peer_model.peerschatDb_save(request_data, (err, data) => {
 
                     if (err) {                     
                         return callback(err);

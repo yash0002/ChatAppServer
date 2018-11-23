@@ -44,10 +44,10 @@ function chatFunction() {
 /**
 * @description saving data inside database
 */
-chatFunction.prototype.peerschatDb_save = function (req, result1, result2, callback) {
+chatFunction.prototype.peerschatDb_save = function (req, callback) {
 
-  // console.log('Request on model page');
-  // console.log(req.message_sent);
+  console.log('Request on model page');
+  console.log(req);
 
 
   // console.log('result1 on service before save');
@@ -57,11 +57,11 @@ chatFunction.prototype.peerschatDb_save = function (req, result1, result2, callb
   // console.log(result2);
 
   let newPeerChat = new peerschat({
-    sender_id: result1._id,
-    receiver_id: result2._id,
-    message: req.message_sent,
-    sender_email_id: result1.email_id,
-    receiver_email_id: result2.email_id
+    sender_id: req.sender_id,
+    receiver_id: req.receiver_id,
+    message: req.message,
+    sender_email_id: req.sender_email_id,
+    receiver_email_id: req.receiver_email_id
   });
 
   newPeerChat.save(function (err, result) {
