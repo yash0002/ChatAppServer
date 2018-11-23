@@ -44,29 +44,29 @@ function chatFunction() {
  /**
  * @description saving data inside database
  */
- chatFunction.prototype.peerschatDb_save = function(req, result, callback) {
+ chatFunction.prototype.peerschatDb_save = function(req, result1, result2, callback) {
 
   console.log('Request on model page');
   console.log(req.message);
   
-  let newChat = new chatsnew({
-    sender_id : result.sender_id,
-    receiver_id : result.receiver_id,
-    message : req.message,
-    sender_email_id : result.sender_email_id,
-    receiver_email_id : result.receiver_email_id
+  let newPeerChat = new chatsnew({
+    sender_id : result1._id,
+    receiver_id : result2._id,
+    message : req.message_sent,
+    sender_email_id : result1.email_id,
+    receiver_email_id : result2.email_id
   });
 
-  newChat.save(function (err, result) {
+  newPeerChat.save(function (err, result) {
     if(err) 
     {
-      console.log('error on saving via populating');        
+      console.log('error on saving on peer');        
       console.log(err);
       return callback(err);
     }
     else {
-      //   console.log('data on save via populating');        
-      // console.log(result);
+        console.log('data on peer ');        
+      console.log(result);
       console.log('Message Inserted Successfully Done');
       return callback(null, result);
     }
@@ -79,26 +79,28 @@ function chatFunction() {
 chatFunction.prototype.peerschatDb_fetch = function(callback) {
 
 //   chatsnew.findOne({email_id : 'bridge@gmail.com'}).populate('email_id')
-chatsnew.find().populate('newChat')
+
+peerschat.find().populate('newPeerChat')
   .exec(function (err, result) {
     if(err) 
     {
-        console.log('error via populating');        
+        console.log('error on reading - peer');        
       console.log(err);
       return callback(err);
     }
     else {
-        // console.log('Result via populating');
-        // console.log(result);
+        console.log('Result on reading - peer');
+        console.log(result);
         
-      let chats_format = [];
+      let peer_chats_format = [];
       result.forEach(function(x) {
-        chats_format.push({
+        peer_chats_format.push({
           message : x.message,
-          email_id : x.email_id
+          sender_email_id : x.sender_email_id,
+          receiver_email_id : x.receiver_email_id
         })
       })
-      return callback(null, chats_format);
+      return callback(null, peer_chats_format);
     }
   })
 }

@@ -14,10 +14,14 @@ var nodemailer = require('nodemailer');
 exports.chat_peer_service_function = function (req, callback) {
 let result_to_send;
 
+let sender_email_id_in_request = req.sender_email_id;
+let receiver_email_id_in_request = req.receiver_email_id;
+
 console.log('Request on Service page');
 console.log(req);
-console.log(req.email_id);
-console.log(req.message);
+console.log(req.sender_email_id);
+console.log(req.receiver_email_id);
+console.log(req.message_sent);
 console.log('------');
 
 //----------------Example of Async Waterfall------------
@@ -25,30 +29,37 @@ async.waterfall([
 
     function (callback) {
 
-        // user_model.User_Check_Sender_chatDb(req, (err, data) => {
-        //     if (err) {
-        //         callback(err);
-        //     }
-        //     else {             
-        //         callback(null, req, data);
-        //     }
+        user_model.User_Check_peer_chatDb(sender_email_id_in_request, (err, data) => {
+                if (err) {
+                    callback(err);
+                }
+                else {             
+                    callback(null, req, data);
+                }
+            })
+         }, function(req, result1, callback) {
+            
+            user_model.User_Check_peer_chatDb(receiver_email_id_in_request, (err, data) => {
+                if(result1 != null) {
 
-        // }) }, function(req, result, callback) {
-        //     user_model.User_Check_Receiver_chatDb(req, (err, data) => {
-        //         if (err) {
-        //             callback(err);
-        //         }
-        //         else {             
-        //             callback(null, req, data);
-        //         }
-    
-        //     })
-        //}, 
-        function(req, result, callback) {
+                    if (err) {
+                        callback(err);
+                    }
+                    else {             
+                        callback(null, req, result1, data);
+                    }
+        
+                }
+                else {
+                    callback(result1);
+                }
+                
+            })
+        }, function(req, result1, result2, callback) {
             
-            if(result != null ) {
+            if(result2 != null ) {
             
-                models_chats.chatsDb(req, result, (err, data) => {
+                chat_peer_model.peerschatDb_save(req, result1, result2, (err, data) => {
 
                     if (err) {                     
                         return callback(err);
@@ -59,13 +70,14 @@ async.waterfall([
                 });
             }
             else {
-                callback(result);
+                callback(result2);
             }
 
-        }, function(result, callback) {
+        }, function(result_of_save, callback) {
             
-            if(result != null ) {
-                models_chats.chatsDb_fetch((err, data) => {
+            if(result_of_save != null ) {
+                
+                chat_peer_model.peerschatDb_fetch((err, data) => {
 
                     if (err) {                     
                         return callback(err);
@@ -76,11 +88,11 @@ async.waterfall([
                 });
             }
             else {
-                callback(result);
+                callback(result_of_save);
             }
         }
-
-    ], function (err, result_fetch){
+        
+    ], function (err, result_fetch){        //Waterfall functions send result in below function
     if(err) {
         console.log(err);           
     }

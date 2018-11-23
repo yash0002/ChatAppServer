@@ -125,8 +125,8 @@ socket_io.on('connection', function(socket) {
   /**
    * @description to emit all messages to login_user
    */
-  server_socket_launch();
-  function server_socket_launch() {
+  server_socket_launch_peer();
+  function server_socket_launch_peer() {
     controller_of_chat.chat_peer_fetch_controller((err, data) => {
       if(err) {
         socket.emit('response_peer_message', err);
