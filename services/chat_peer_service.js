@@ -12,10 +12,13 @@ var nodemailer = require('nodemailer');
  * @description Chat service for storing message
  */
 exports.chat_peer_service_function = function (req, callback) {
-let result_to_send;
+let result_to_send, request_data = [];;
 
 let sender_email_id_in_request = req.sender_email_id;
 let receiver_email_id_in_request = req.receiver_email_id;
+let message = req.message_sent;
+let sender_id_user_db, receiver_id_user_db;
+
 
 // console.log('Request on Service page');
 // console.log(req);
@@ -34,11 +37,12 @@ async.waterfall([
                     callback(err);
                 }
                 else {             
-                    callback(null, req, data);
+                    callback(null, data);
                 }
             })
-         }, function(req, result1, callback) {
+         }, function(result1, callback) {
             
+            sender_id_user_db = result1._id;
             user_model.User_Check_peer_chatDb(receiver_email_id_in_request, (err, data) => {
                 if(result1 != null) {
 
