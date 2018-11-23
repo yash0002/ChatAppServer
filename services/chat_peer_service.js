@@ -11,7 +11,7 @@ var nodemailer = require('nodemailer');
 /**
  * @description Chat service for storing message
  */
-exports.chat_service_function = function (req, callback) {
+exports.chat_peer_service_function = function (req, callback) {
 let result_to_send;
 
 console.log('Request on Service page');
@@ -101,14 +101,16 @@ async.waterfall([
 /**
  * @description Chat service for fetching data
  */
-exports.chat_fetch_service_function = function (callback) {
+exports.chat_peer_fetch_service_function = function (callback) {
 
-    models_chats.chatsDb_fetch((err, data) => {
+    chat_peer_model.peerschatDb_fetch((err, data) => {
 
         if (err) {
             return callback(err);
         }
         else {
+            console.log('data on service');
+            console.log(data);            
             callback(null, data);
         }
     });

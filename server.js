@@ -77,34 +77,34 @@ socket_io.on('connection', function(socket) {
         }
       })
     }
-    
-    /**
-     * @description This on connection is for peer messages
-     */
-    socket.on('chat_peer_message', function(request) {
-    
-      let request_message = {
-        sender_email_id : user_login,
-        receiver_email_id : receiver_email,
-        message_sent : message
-    };
-
-      console.log('Request on server page');
-      console.log(request_message);
-      
-      server_socket_launch(request_message);
-      function server_socket_launch(request_message) { 
-        controller_of_chat.chat_peer_controller(request_message, (err, data) => {
-          if(err) {
-            socket.emit('response_message', err);
-          }
-          else {
-            socket_io.broadcast.emit('response_message', data);
-            // socket.emit('response_message', data);    
-          }
-        })
-      }
   })
+
+  /**
+   * @description This on connection is for peer messages
+   */
+  socket.on('chat_peer_message', function(request) {
+
+    let request_message = {
+      sender_email_id : request.sender_email_id,
+      receiver_email_id : request.receiver_email_id,
+      message_sent : message_sent
+  };
+
+    console.log('Request on server page');
+    console.log(request_message);
+    
+    server_socket_launch(request_message);
+    function server_socket_launch(request_message) { 
+      controller_of_chat.chat_peer_controller(request_message, (err, data) => {
+        if(err) {
+          socket.emit('response_peer_message', err);
+        }
+        else {
+          socket_io.broadcast.emit('response_peer_message', data);
+          // socket.emit('response_peer_message', data);    
+        }
+      })
+    }
 
   /**
    * @description to emit all messages to login_user
@@ -118,6 +118,22 @@ socket_io.on('connection', function(socket) {
       else {
         // socket.emit('response_message', data);    
         socket.broadcast.emit('response_message', data);
+      }
+    })
+  }
+
+  /**
+   * @description to emit all messages to login_user
+   */
+  server_socket_launch();
+  function server_socket_launch() {
+    controller_of_chat.chat_peer_fetch_controller((err, data) => {
+      if(err) {
+        socket.emit('response_peer_message', err);
+      }
+      else {
+        // socket.emit('response_peer_message', data);    
+        socket.broadcast.emit('response_peer_message', data);
       }
     })
   }
