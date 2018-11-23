@@ -62,8 +62,8 @@ socket_io.on('connection', function(socket) {
       message : request.message_sent
     };
 
-    console.log('Request on server page');
-    console.log(request_message);
+    // console.log('Request on server page');
+    // console.log(request_message);
     
     server_socket_launch(request_message);
     function server_socket_launch(request_message) { 
@@ -90,12 +90,12 @@ socket_io.on('connection', function(socket) {
       message_sent : request.message_sent
   };
 
-    console.log('Request on server page -- peer');
-    console.log(request_message);
+    // console.log('Request on server page -- peer');
+    // console.log(request_message);
     
     server_socket_launch(request_message);
     function server_socket_launch(request_message) {
-    console.log(request_message); 
+    // console.log(request_message); 
       controller_of_chat.chat_peer_controller(request_message, (err, data) => {
         if(err) {
           socket.emit('response_peer_message', err);

@@ -16,8 +16,9 @@ const service_peer_service = require('../services/chat_peer_service');
  */
 exports.chat_controller = function(req, callback ) {
 
-    console.log('Request on controller page');
-    console.log(req);
+    // console.log('Request on controller page');
+    // console.log(req);
+    // console.log(typeof req);
     service_ref.chat_service_function(req, (err,data) => {        
         if(err) {
             callback(err)
@@ -47,8 +48,8 @@ exports.chat_fetch_controller = function(callback) {
  */
 exports.chat_peer_controller = function(req, callback ) {
 
-    console.log('Request on controller page');
-    console.log(req);
+    // console.log('Request on controller page');
+    // console.log(req);
     service_peer_service.chat_peer_service_function(req, (err,data) => {        
         if(err) {
             callback(err)
@@ -68,8 +69,8 @@ exports.chat_peer_fetch_controller = function(callback) {
             callback(err)
         }
         else {
-            console.log('data on controller');
-            console.log(data);            
+            // console.log('data on controller');
+            // console.log(data);            
             callback(null, data)
         }
     })

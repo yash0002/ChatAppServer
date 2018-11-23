@@ -17,12 +17,12 @@ let result_to_send;
 let sender_email_id_in_request = req.sender_email_id;
 let receiver_email_id_in_request = req.receiver_email_id;
 
-console.log('Request on Service page');
-console.log(req);
-console.log(req.sender_email_id);
-console.log(req.receiver_email_id);
-console.log(req.message_sent);
-console.log('------');
+// console.log('Request on Service page');
+// console.log(req);
+// console.log(req.sender_email_id);
+// console.log(req.receiver_email_id);
+// console.log(req.message_sent);
+// console.log('------');
 
 //----------------Example of Async Waterfall------------
 async.waterfall([
@@ -58,11 +58,11 @@ async.waterfall([
         }, function(req, result1, result2, callback) {
             
             if(result2 != null ) {
-                console.log('result1 on service before save');
-                console.log(result1);
+                // console.log('result1 on service before save');
+                // console.log(result1);
                 
-                console.log('result2 on service before save');
-                console.log(result2);
+                // console.log('result2 on service before save');
+                // console.log(result2);
 
                 chat_peer_model.peerschatDb_save(req, result1, result2, (err, data) => {
 
@@ -126,8 +126,8 @@ exports.chat_peer_fetch_service_function = function (callback) {
             return callback(err);
         }
         else {
-            console.log('data on service');
-            console.log(data);            
+            // console.log('data on service');
+            // console.log(data);            
             callback(null, data);
         }
     });

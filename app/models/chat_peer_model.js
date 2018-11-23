@@ -46,15 +46,15 @@ function chatFunction() {
  */
  chatFunction.prototype.peerschatDb_save = function(req, result1, result2, callback) {
 
-  console.log('Request on model page');
-  console.log(req.message_sent);
+  // console.log('Request on model page');
+  // console.log(req.message_sent);
   
 
-  console.log('result1 on service before save');
-  console.log(result1);
+  // console.log('result1 on service before save');
+  // console.log(result1);
   
-  console.log('result2 on service before save');
-  console.log(result2);
+  // console.log('result2 on service before save');
+  // console.log(result2);
 
   let newPeerChat = new peerschat({
     sender_id : result1._id,
@@ -67,13 +67,13 @@ function chatFunction() {
   newPeerChat.save(function (err, result) {
     if(err) 
     {
-      console.log('error on saving on peer');        
-      console.log(err);
+      // console.log('error on saving on peer');        
+      // console.log(err);
       return callback(err);
     }
     else {
-        console.log('data on peer ');        
-      console.log(result);
+      //   console.log('data on peer ');        
+      // console.log(result);
       console.log('Message Inserted Successfully Done');
       return callback(null, result);
     }
@@ -91,13 +91,13 @@ peerschat.find().populate('newPeerChat')
   .exec(function (err, result) {
     if(err) 
     {
-        console.log('error on reading - peer');        
-      console.log(err);
+      //   console.log('error on reading - peer');        
+      // console.log(err);
       return callback(err);
     }
     else {
-        console.log('Result on reading - peer');
-        console.log(result);
+        // console.log('Result on reading - peer');
+        // console.log(result);
         
       let peer_chats_format = [];
       result.forEach(function(x) {
