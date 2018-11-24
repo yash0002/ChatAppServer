@@ -55,18 +55,10 @@ socket_io.on('connection', function (socket) {
    * socket_io('join', function(email_id)) {}
    */
   socket.on('chat_message', function (request) {
-
-    let request_message = {
-      email_id: request.email_id,
-      message: request.message_sent
-    };
-
-    // console.log('Request on server page');
-    // console.log(request_message);
-
-    server_socket_launch(request_message);
-    function server_socket_launch(request_message) {
-      controller_of_chat.chat_controller(request_message, (err, data) => {
+    console.log('request on server side ', request);
+    server_socket_launch(request);
+    function server_socket_launch(request) {
+      controller_of_chat.chat_controller(request, (err, data) => {
         if (err) {
           socket.emit('response_message', err);
         }
@@ -82,13 +74,6 @@ socket_io.on('connection', function (socket) {
    * @description This on connection is for peer messages
    */
   socket.on('chat_peer_message', function (request) {
-
-    let request_message = {
-      sender_email_id: request.sender_email_id,
-      receiver_email_id: request.receiver_email_id,
-      message_sent: request.message_sent
-    };
-
     // console.log('Request on server page -- peer');
     // console.log(request_message);
 

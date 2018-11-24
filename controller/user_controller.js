@@ -63,12 +63,16 @@ exports.login_controller = function (req, res, next) {
 /**
  * @description Controller for register & sending response to client
  */
-exports.register_controller = function (req, res) {
+exports.register_controller = function (req, res, next) {
     try {
         service.register_service_function(req, (err, data) => {
 
-            if (err) res.status(400).send(err)
-            else res.status(200).send(data);
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
         })
     }
     catch(err) {
@@ -76,12 +80,16 @@ exports.register_controller = function (req, res) {
     }
 }
 
-exports.logout_controller = function (req, res) {
+exports.logout_controller = function (req, res, next) {
     try {
         service.logout_service_function(req, (err, data) => {
 
-            if (err) res.status(400).send(err)
-            else res.status(200).send(data);
+            if (err) {
+                res.status(400).send(err)
+            }
+            else {
+                res.status(200).send(data);
+            }
         })
     }
     catch (err) {
