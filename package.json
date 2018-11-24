@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "sever.js",
   "dependencies": {
+    "assert": "^1.4.1",
     "async": "^2.6.1",
     "async-waterfall": "^0.1.5",
     "bcrypt": "^3.0.2",

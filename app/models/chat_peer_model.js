@@ -20,7 +20,7 @@ var Schema = mongoose.Schema;
 var chatSchema = new Schema({
   sender_id: { type: Schema.Types.ObjectId, ref: 'user' },
   receiver_id: { type: Schema.Types.ObjectId, ref: 'user' },
-  message: { type: String, required: true },
+  message: { type: String},
   sender_email_id: { type: String },
   receiver_email_id: { type: String }
 });
@@ -49,13 +49,6 @@ chatFunction.prototype.peerschatDb_save = function (req, callback) {
   console.log('Request on model page');
   console.log(req);
 
-
-  // console.log('result1 on service before save');
-  // console.log(result1);
-
-  // console.log('result2 on service before save');
-  // console.log(result2);
-
   let newPeerChat = new peerschat({
     sender_id: req.sender_id,
     receiver_id: req.receiver_id,
@@ -66,13 +59,13 @@ chatFunction.prototype.peerschatDb_save = function (req, callback) {
 
   newPeerChat.save(function (err, result) {
     if (err) {
-      // console.log('error on saving on peer');        
-      // console.log(err);
+      console.log('error on saving on peer');        
+      console.log(err);
       return callback(err);
     }
     else {
-      //   console.log('data on peer ');        
-      // console.log(result);
+        console.log('data on peer ');        
+      console.log(result);
       console.log('Message Inserted Successfully Done');
       return callback(null, result);
     }

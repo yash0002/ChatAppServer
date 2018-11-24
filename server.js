@@ -60,9 +60,19 @@ socket_io.on('connection', function (socket) {
     function server_socket_launch(request) {
       controller_of_chat.chat_controller(request, (err, data) => {
         if (err) {
-          socket.emit('response_message', err);
+          // data = {
+          //   "message": err,
+          //   "success": false,
+          //   "data": [] 
+          // };
+          socket.emit('response_message', data);
         }
         else {
+          // data = {
+          //   "message": "Something bad happened",
+          //   "success": true,
+          //   "data": data 
+          // };
           socket_io.broadcast.emit('response_message', data);
           // socket.emit('response_message', data);    
         }

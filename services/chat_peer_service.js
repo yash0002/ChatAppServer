@@ -65,24 +65,19 @@ async.waterfall([
             receiver_id_user_db = result2._id;
 
             if(result2 != null ) {
-                // console.log('result1 on service before save');
-                // console.log(result1);
                 
-                // console.log('result2 on service before save');
-                // console.log(result2);
-
                 console.log('Service Page -----');
                 console.log(sender_id_user_db);
                 console.log(receiver_id_user_db);
                 console.log(message);
                 
-                request_data = [{
+                request_data = {
                     sender_id : sender_id_user_db,
                     receiver_id : receiver_id_user_db,
                     message : message,
                     sender_email_id : sender_email_id_in_request,
                     receiver_email_id : receiver_email_id_in_request
-                }]
+                }
                 
                 chat_peer_model.peerschatDb_save(request_data, (err, data) => {
 
