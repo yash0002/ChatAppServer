@@ -77,10 +77,10 @@ socket_io.on('connection', function (socket) {
     // console.log('Request on server page -- peer');
     // console.log(request_message);
 
-    server_socket_launch(request_message);
-    function server_socket_launch(request_message) {
+    server_socket_launch(request);
+    function server_socket_launch(request) {
       // console.log(request_message); 
-      controller_of_chat.chat_peer_controller(request_message, (err, data) => {
+      controller_of_chat.chat_peer_controller(request, (err, data) => {
         if (err) {
           socket.emit('response_peer_message', err);
         }

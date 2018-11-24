@@ -42,7 +42,7 @@ var signOptions = {
 
 exports.login_controller = function (req, res, next) {
     try {
-        service.login_service_function(req, (err, data) => {
+        service.login_service_function(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err);
@@ -64,8 +64,9 @@ exports.login_controller = function (req, res, next) {
  * @description Controller for register & sending response to client
  */
 exports.register_controller = function (req, res, next) {
+
     try {
-        service.register_service_function(req, (err, data) => {
+        service.register_service_function(req.body, (err, data) => {
 
             if (err) {
                 res.status(400).send(err)

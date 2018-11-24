@@ -79,7 +79,7 @@ exports.login_service_function = function(req, callback) {
             let login_string = `Activity Review : Account Login on ${new Date().toDateString()} at ${new Date().toLocaleTimeString()}`;
             const mailOptions = {
                 from: 'labzbridge02@gmail.com', // sender address
-                to: req.body.email, // list of receivers
+                to: req.email, // list of receivers
                 subject: 'login activity', // Subject line
                 html: `<p>${login_string}<br/><br/> Check It ! </p>`// plain text body
             };
@@ -120,6 +120,8 @@ exports.login_service_function = function(req, callback) {
  */
 exports.register_service_function = function(req, callback) {
 
+    console.log('request on service page');
+    console.log(req);
     models.registerDb(req, (err, data) => {
 
         if(err) {
@@ -129,7 +131,7 @@ exports.register_service_function = function(req, callback) {
 
             const mailOptions = {
                 from: 'labzbridge02@gmail.com', // sender address
-                to: req.body.email, // list of receivers
+                to: req.email, // list of receivers
                 subject: 'Registration Successful on ChatApp', // Subject line
                 html: '<p>Your are most Welcome to chat on ChatApp anytime. Thank You!</p>'// plain text body
             };

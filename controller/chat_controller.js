@@ -68,11 +68,11 @@ exports.chat_fetch_controller = function (callback) {
  */
 exports.chat_peer_controller = function (req, callback) {
 
-    try {
+    // try {
         // if (req.email_id !== null || req.email_id !== undefined || req.email_id.length !== 0) throw 'email_id invalid' 
         // {
-        //     if (req.message !== null || req.message !== undefined || req.message.length !== 0) throw 'message invalid'
-        //     {
+            if (req.message_sent != "")
+            {
                 console.log('Request on controller page');
                 console.log(req);
                 console.log(typeof req);
@@ -80,7 +80,7 @@ exports.chat_peer_controller = function (req, callback) {
                 let requset_object = {
                     sender_email_id: req.sender_email_id,
                     receiver_email_id: req.receiver_email_id,
-                    message_sent: message
+                    message_sent: message_sent
                   };              
               
                 // console.log('Request on controller page');
@@ -93,13 +93,13 @@ exports.chat_peer_controller = function (req, callback) {
                         callback(null, data)
                     }
                 })
-        //     }
+            }
         // }
-    }
-    catch (err) {
-        // res.status(400).send(err)
-        console.log(err);
-    }
+    // }
+    // catch (err) {
+    //     // res.status(400).send(err)
+    //     console.log(err);
+    // }
 }
 
 /**
