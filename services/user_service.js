@@ -109,8 +109,10 @@ exports.login_service_function = function(req, callback) {
                 }
                     
             });
+            console.log('data on service page');
+            console.log(data);
 
-            callback(null, data);
+            return callback(null, data);
         }
     });
 }

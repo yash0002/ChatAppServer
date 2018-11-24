@@ -33,16 +33,16 @@ var user = mongoose.model('user', userSchema);
 /**
  * @description to create prototype
  */
-function person () {
+function person() {
 
 }
 
- /**
-  * @description Finding data inside database
-  * make this available to our users in our Node applications
-  */
+/**
+ * @description Finding data inside database
+ * make this available to our users in our Node applications
+ */
 
-person.prototype.loginDb = function(req, callback) {
+person.prototype.loginDb = function (req, callback) {
 
   //Async
   // bcrypt.compare('somePassword', hash, function(err, res) {
@@ -75,28 +75,47 @@ person.prototype.loginDb = function(req, callback) {
   console.log("model login user bcrpt");
   console.log(req.email);
   console.log(req.passw);
-  user.findOne({email_id : req.email})
-    // .then(function(result) {
-    //     return bcrypt.compare(result.password, req.passw);
-    // })
-    // .then(function(final_result) {
-    //     if(!final_result) {
-    //         // res.status(403).send();
-    //         return callback(null);
-    //     }
-    //     // res.send();
-    //     else {
-    //       console.log('final result');
-    //       console.log(final_result);
-    //       return callback(final_result);
-    //     }
-    // })
-    // .catch(function(error){
-    //     console.log("Error authenticating user: ");
-    //     console.log(error);
-    //     // next();
-    //     return callback(error);
-    // });
+  user.findOne({ email_id: req.email }, function (err, result) {
+    if (result == null) {
+      console.log('error in checking ', err);
+      return callback(err);
+    }
+    else {
+
+      if (bcrypt.compareSync(req.passw, result.password)) {
+        console.log("compare result");
+        console.log(result);
+        return callback(null, result);
+      }
+      else {
+        console.log("compare null");
+        return callback(null);
+      }
+      // return callback(null, result);            
+    }
+
+  })
+  // .then(function(result) {
+  //     return bcrypt.compare(result.password, req.passw);
+  // })
+  // .then(function(final_result) {
+  //     if(!final_result) {
+  //         // res.status(403).send();
+  //         return callback(null);
+  //     }
+  //     // res.send();
+  //     else {
+  //       console.log('final result');
+  //       console.log(final_result);
+  //       return callback(final_result);
+  //     }
+  // })
+  // .catch(function(error){
+  //     console.log("Error authenticating user: ");
+  //     console.log(error);
+  //     // next();
+  //     return callback(error);
+  // });
 
 
 }
@@ -104,17 +123,17 @@ person.prototype.loginDb = function(req, callback) {
 /**
  * @description for Chat User Check
  */
-person.prototype.User_Chjeck_chatDb = function(req, callback) {
+person.prototype.User_Chjeck_chatDb = function (req, callback) {
 
-  user.findOne({email_id : req.email_id},function(err, result) {
-    if(result == null) {
-      console.log('error in checking ',err);      
+  user.findOne({ email_id: req.email_id }, function (err, result) {
+    if (result == null) {
+      console.log('error in checking ', err);
       return callback(err);
-    } 
+    }
     else {
       console.log('Login Successful');
-      console.log(result);      
-      return callback(null, result);            
+      console.log(result);
+      return callback(null, result);
     }
   })
 }
@@ -122,17 +141,17 @@ person.prototype.User_Chjeck_chatDb = function(req, callback) {
 /**
  * @description for Peers Chat User Check - Sender
  */
-person.prototype.User_Check_peer_chatDb = function(req, callback) {
+person.prototype.User_Check_peer_chatDb = function (req, callback) {
 
-  user.findOne({email_id : req},function(err, result) {
-    if(result == null) {
-      console.log('error in checking ',err);      
+  user.findOne({ email_id: req }, function (err, result) {
+    if (result == null) {
+      console.log('error in checking ', err);
       return callback(err);
-    } 
+    }
     else {
       console.log('Login Successful');
-      console.log(result);      
-      return callback(null, result);            
+      console.log(result);
+      return callback(null, result);
     }
   })
 }
@@ -140,7 +159,7 @@ person.prototype.User_Check_peer_chatDb = function(req, callback) {
 /**
  * @description saving data inside database
  */
-person.prototype.registerDb = function(req, callback) {
+person.prototype.registerDb = function (req, callback) {
 
 
   // bcrypt.hash(req.passw, 3, function(err, hash) {
@@ -150,13 +169,12 @@ person.prototype.registerDb = function(req, callback) {
   let hash = bcrypt.hashSync(req.passw, 10);
 
   let newUser = new user({
-    email_id:req.email,
-    password:hash
+    email_id: req.email,
+    password: hash
   });
-  
+
   newUser.save(function (err, result) {
-    if(err) 
-    {
+    if (err) {
       console.log(err);
       return callback(err);
     }
@@ -167,21 +185,21 @@ person.prototype.registerDb = function(req, callback) {
   })
 }
 
- /**
-  * @description Finding data inside database
-  * make this available to our users in our Node applications
-  */
- person.prototype.logoutDb = function(req, callback) {
+/**
+ * @description Finding data inside database
+ * make this available to our users in our Node applications
+ */
+person.prototype.logoutDb = function (req, callback) {
 
-  user.findOne({email_id : req.body.log_user_email_id},function(err, result) {
-    if(err) {
+  user.findOne({ email_id: req.body.log_user_email_id }, function (err, result) {
+    if (err) {
 
-      console.log(err);      
+      console.log(err);
       return callback(err);
-    } 
+    }
     else {
       console.log('Logout Successful');
-      return callback(null, result);            
+      return callback(null, result);
     }
   })
 }
